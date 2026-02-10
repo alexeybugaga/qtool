@@ -1,0 +1,20 @@
+:root {
+  /* Colors */
+  --color-text: #303b45;
+  --color-white: #fff;
+  --color-gray-99: #999999;
+  --color-gray-66: #666666;
+
+  --color-light-gray: #f4f6f9;
+  --color-gray-33: #333333;
+
+  --color-brand: #0475b1;
+  --color-brand-opacity-15: #0475b126;
+  --color-brand-active: #00669d;
+
+  --color-gray-opacity-15: #303b4526;
+  --color-gray-opacity-75: #303b45bf;
+  --color-gray-opacity-50: #303b4580;
+
+  --color-error: #ed1d23;
+}
