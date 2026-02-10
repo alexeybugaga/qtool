@@ -397,16 +397,33 @@
                     <div
                       class="production-request__technical-information-wrapper js-technical-information"
                     >
-                      <button
-                        type="button"
-                        class="production-request__remove-position-btn js-remove-position"
-                      >
-                        Удалить позицию
-                      </button>
                       <div class="production-request__select-tool">
-                        <span class="production-request__select-tool-title"
-                          >Выберите инструмент</span
+                        <div
+                          class="production-request__select-tool-top-wrapper flex"
                         >
+                          <span class="production-request__select-tool-title"
+                            >Выберите инструмент</span
+                          >
+                          <button
+                            type="button"
+                            class="production-request__remove-position-btn js-remove-position"
+                          >
+                            <span> Удалить позицию </span>
+                            <svg
+                              width="12"
+                              height="12"
+                              viewBox="0 0 12 12"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="production-request__remove-position-btn-icon"
+                            >
+                              <path
+                                d="M9.17938 9.88999L5.99938 6.70499L2.81938 9.88999L2.10938 9.17999L5.29438 5.99999L2.10938 2.81999L2.81938 2.10999L5.99938 5.29499L9.17938 2.11499L9.88438 2.81999L6.70438 5.99999L9.88438 9.17999L9.17938 9.88999Z"
+                                fill="currentColor"
+                              />
+                            </svg>
+                          </button>
+                        </div>
                         <ul class="production-request__select-tool-list">
                           <li class="production-request__select-tool-item">
                             <button
