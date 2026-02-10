@@ -1,0 +1,368 @@
+@import url("./font.css");
+
+body {
+  font-weight: 400;
+  font-family: "Montserrat", sans-serif, Arial, Helvetica;
+  background-color: var(--color-white);
+}
+
+html,
+body {
+  color: var(--color-text);
+  scroll-behavior: smooth;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+body ul,
+body ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+body ol > li::marker {
+  font-weight: inherit;
+}
+
+body a {
+  text-decoration: none;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.noselect {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  appearance: textfield !important;
+  -moz-appearance: textfield !important;
+}
+
+/* --- UI styles --- */
+
+/* -- Container -- */
+
+.container-wide {
+  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 1320px;
+}
+
+/* -- Typography -- */
+
+.main-title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.second-title {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.small-title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+@media (min-width: 1200px) {
+  .main-title {
+    font-size: 32px;
+    line-height: 24px;
+  }
+
+  .second-title {
+    font-size: 26px;
+    line-height: 32px;
+  }
+
+  .small-title {
+    font-size: 21px;
+  }
+}
+
+/* -- Fields -- */
+
+.inputbox {
+  position: relative;
+  height: fit-content;
+}
+
+.input,
+.textarea {
+  padding: 15px 19px;
+  height: 56px;
+  font-size: 13px;
+  line-height: 24px;
+  width: 100%;
+  border: 1px solid var(--color-gray-opacity-15);
+  transition: border-color 0.3s ease;
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  font-size: 13px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--color-gray-opacity-75);
+  transition: all 0.3s ease;
+}
+
+.textarea + .label {
+  top: 28px;
+}
+
+.input.error {
+  border-color: var(--color-error);
+}
+
+.input:not(.error):hover,
+.input:not(.error):focus {
+  border-color: var(--color-gray-opacity-75);
+}
+
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label,
+.textarea:focus + .label,
+.textarea:not(:placeholder-shown) + .label {
+  transform: none;
+  top: 0;
+  font-size: 9px;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  font-weight: 500;
+  color: var(--color-gray-opacity-75);
+}
+
+.textarea {
+  resize: none;
+  min-height: 124px;
+  width: 100%;
+  line-height: 16px;
+}
+
+/* -- File input -- */
+.file {
+  position: relative;
+}
+
+.file-label {
+  padding: 15px 32px;
+  border: 1px dashed var(--color-gray-99);
+}
+
+/* -- Custom checkbox */
+.custom-checkbox-wrapper {
+  position: relative;
+}
+
+.checkbox-input {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.custom-checkbox-input {
+  position: relative;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--color-brand);
+}
+
+.custom-checkbox-input::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  bottom: 1px;
+  left: 1px;
+  right: 1px;
+  transition: background-color 0.3s ease;
+}
+
+.checkbox-input:checked + .custom-checkbox-label .custom-checkbox-input::after {
+  background-color: var(--color-brand);
+}
+
+.custom-checkbox-label {
+  justify-content: center;
+  gap: 10px;
+  font-size: 9px;
+  line-height: 11px;
+  color: var(--color-gray-66);
+}
+
+.custom-checkbox-wrapper span.error {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  display: inline-block;
+  width: 100%;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+  color: var(--color-error);
+}
+
+@media (min-width: 769px) {
+  .input {
+    font-size: 15px;
+  }
+  .label {
+    font-size: 15px;
+  }
+
+  .textarea {
+    min-height: 98px;
+    font-size: 15px;
+  }
+
+  .file-label {
+    padding: 23px 46px;
+  }
+
+  .custom-checkbox-label {
+    justify-content: flex-start;
+    font-size: 12px;
+  }
+
+  .custom-checkbox-wrapper span.error {
+    width: auto;
+  }
+}
+
+/* -- Select -- */
+.choices {
+  margin: 0;
+}
+
+.choices__inner {
+  padding: 7.5px 16px;
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid var(--color-gray-opacity-15);
+  border-radius: 0;
+  font-size: 13px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.choices__list--dropdown .choices__item,
+.choices__list[aria-expanded] .choices__item {
+  font-size: 13px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.choices__list--single .choices__item {
+  color: var(--color-gray-opacity-75);
+}
+
+.choices[data-type*="select-one"]::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: 2px solid var(--color-gray-opacity-75);
+  border-radius: 2px;
+  border-top: transparent;
+  border-left: transparent;
+  transform: translateY(-50%) rotate(45deg);
+  position: absolute;
+  right: 28px;
+  top: 50%;
+  pointer-events: none;
+}
+
+.choices[data-type*="select-one"].is-open::after {
+  margin-top: 0;
+  border: none;
+  border-top: 2px solid var(--color-gray-opacity-75);
+  border-left: 2px solid var(--color-gray-opacity-75);
+}
+.choices__list--single {
+  padding: 4px 20px 4px 4px;
+}
+
+@media (min-width: 769px) {
+  .choices__inner {
+    font-size: 15px;
+  }
+
+  .choices__list--dropdown .choices__item,
+  .choices__list[aria-expanded] .choices__item {
+    font-size: 15px;
+  }
+}
+
+/* -- Buttons -- */
+
+.main-btn {
+  padding: 12px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  background-color: var(--color-brand);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 100%;
+  color: var(--color-white);
+  transition: background-color 0.3s ease;
+}
+
+.main-btn:hover,
+.main-btn:focus,
+.main-btn:active {
+  background-color: var(--color-brand-active);
+}
+
+@media (min-width: 769px) {
+  .main-btn {
+    min-height: 72px;
+    font-size: 18px;
+  }
+}

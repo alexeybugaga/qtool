@@ -1,0 +1,238 @@
+$(function () {
+  (() => {
+    /** Подключение slick slider */
+
+    $(function () {
+      const $slider = $(".js-orders-completed-slider").slick({
+        arrows: false,
+        dots: false,
+        infinite: false,
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 2,
+            },
+          },
+          {
+            breakpoint: 570,
+            settings: {
+              slidesToShow: 1,
+            },
+          },
+        ],
+      });
+
+      // --- Custom arrows (если они вне слайдера) ---
+      const $prev = $(".js-slider-prev");
+      const $next = $(".js-slider-next");
+
+      $prev.on("click", () => $slider.slick("slickPrev"));
+      $next.on("click", () => $slider.slick("slickNext"));
+
+      const updateArrowsState = () => {
+        const current = $slider.slick("slickCurrentSlide");
+        const total = $slider.slick("getSlick").slideCount;
+        const slidesToShow = $slider.slick("getSlick").options.slidesToShow;
+
+        if (current === 0) {
+          $prev.addClass("is-disabled");
+        } else {
+          $prev.removeClass("is-disabled");
+        }
+
+        if (current >= total - slidesToShow) {
+          $next.addClass("is-disabled");
+        } else {
+          $next.removeClass("is-disabled");
+        }
+      };
+
+      $slider.on("init", updateArrowsState);
+
+      $slider.on("afterChange", updateArrowsState);
+
+      updateArrowsState();
+    });
+
+    /** Input file  */
+
+    const fileInput = document.querySelector(".js-file-input");
+    const fileLabelText = document.querySelector(".js-file-label-text");
+    const fileDeleteBtn = document.querySelector(".js-file-delete-btn");
+
+    if (fileInput && fileLabelText && fileDeleteBtn) {
+      fileInput.addEventListener("change", () => {
+        if (fileInput.files.length > 0) {
+          fileLabelText.textContent = fileInput.files[0].name;
+          fileDeleteBtn.classList?.add("is-visible");
+        } else {
+          fileLabelText.textContent = "Прикрепить файл";
+          fileDeleteBtn.classList.add("is-visible");
+        }
+      });
+
+      fileDeleteBtn.addEventListener("click", () => {
+        fileInput.value = "";
+        fileLabelText.textContent = "Прикрепить файл";
+        fileDeleteBtn.classList.remove("is-visible");
+      });
+    }
+
+    /** Phone input mask */
+
+    $('input[name="phone"]').inputmask({ mask: "+7 (999) 999-99-99" });
+
+    /** Добавить ещё позицию */
+
+    const addBtn = document.querySelector(".js-add-position");
+    const container = document.querySelector(".js-positions-container");
+    const template = document.querySelector("#technical-template");
+
+    let index = 1;
+
+    addPosition();
+
+    function addPosition() {
+      const clone = template.content.firstElementChild.cloneNode(true);
+      clone.classList.add(`js-container-position-${index}`);
+      clone.dataset.positionIndex = index;
+
+      updateAttributes(clone, index);
+      resetValues(clone);
+
+      container.appendChild(clone);
+
+      initChoices(clone);
+      updateRemoveButtons();
+
+      index++;
+    }
+
+    addBtn.addEventListener("click", addPosition);
+
+    container.addEventListener("click", (e) => {
+      if (e.target.closest(".js-remove-position")) {
+        const blocks = container.querySelectorAll(".js-technical-information");
+        if (blocks.length === 1) return;
+
+        e.target.closest(".js-technical-information").remove();
+        updateRemoveButtons();
+        return;
+      }
+
+      /** Сhoose tool  */
+      const toolBtn = e.target.closest(".js-select-tool-btn");
+
+      if (toolBtn) {
+        const block = toolBtn.closest(".js-technical-information");
+
+        block
+          .querySelectorAll(".js-select-tool-btn")
+          .forEach((b) => b.classList.remove("active"));
+
+        toolBtn.classList.add("active");
+
+        const dataParametersTitle =
+          toolBtn.dataset.parametersTitle ?? "Введите параметры фрезы";
+
+        const parametersTitle = block.querySelector(".js-parameters-title");
+
+        if (parametersTitle) {
+          parametersTitle.textContent = dataParametersTitle;
+        }
+      }
+    });
+
+    /** Добавление данных об инструменте в форму */
+
+    function appendToolsToFormData(form, formData) {
+      const positions = form.querySelectorAll(".js-technical-information");
+      console.log("positions", positions);
+      positions.forEach((position) => {
+        const index = position.dataset.positionIndex;
+
+        const activeBtn = position.querySelector(".js-select-tool-btn.active");
+        if (!activeBtn) return;
+
+        const value = activeBtn.dataset.productType;
+
+        formData.append(`positions[${index}][tool]`, value);
+      });
+    }
+
+    /** Отправка формы */
+
+    const form = document.querySelector(".js-request-form");
+    const consent = document.querySelector(".js-consent");
+    const consentLabel = document.querySelector(".js-consent-label");
+    const consentError = document.querySelector(".js-consent-error");
+
+    form.addEventListener("submit", (e) => {
+      consentError.textContent = "";
+      consentLabel.classList.remove("error");
+      const formData = new FormData(form);
+      appendToolsToFormData(form, formData);
+      const data = Object.fromEntries(formData);
+      console.log(data);
+
+      if (!consent.checked) {
+        e.preventDefault();
+        consentLabel.classList.add("error");
+        consentError.textContent =
+          "Необходимо согласие на обработку персональных данных";
+        return;
+      }
+    });
+
+    function updateAttributes(block, index) {
+      block.querySelectorAll("[id]").forEach((el) => {
+        const oldId = el.id;
+        const newId = `${oldId}_${index}`;
+        el.id = newId;
+
+        const label = block.querySelector(`label[for="${oldId}"]`);
+        if (label) label.setAttribute("for", newId);
+      });
+
+      block.querySelectorAll("[name]").forEach((el) => {
+        el.name = `positions[${index}][${el.name}]`;
+      });
+    }
+
+    function resetValues(block) {
+      block.querySelectorAll("input, textarea").forEach((el) => {
+        el.value = "";
+      });
+
+      block.querySelectorAll("select").forEach((el) => {
+        el.selectedIndex = 0;
+      });
+    }
+
+    function initChoices(block) {
+      block.querySelectorAll(".js-choice").forEach((select) => {
+        new Choices(select, {
+          searchEnabled: false,
+          itemSelectText: "",
+          shouldSort: false,
+        });
+      });
+    }
+
+    function updateRemoveButtons() {
+      const blocks = container.querySelectorAll(
+        ".js-technical-information:not(#technical-template .js-technical-information)",
+      );
+
+      blocks.forEach((block, i) => {
+        const btn = block.querySelector(".js-remove-position");
+        blocks.length === 1
+          ? btn.classList.remove("active")
+          : btn.classList.add("active");
+      });
+    }
+  })();
+});
