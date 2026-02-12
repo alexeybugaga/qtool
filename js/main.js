@@ -1,3 +1,5 @@
+import { TOOL_SCHEMAS } from "./config/toolSchemas.js";
+
 $(function () {
   (() => {
     /** Подключение slick slider */
@@ -128,6 +130,9 @@ $(function () {
 
       if (toolBtn) {
         const block = toolBtn.closest(".js-technical-information");
+        const toolType = toolBtn.dataset.productValue;
+        const schema = TOOL_SCHEMAS[toolType];
+        renderParameters(block, schema, index);
 
         block
           .querySelectorAll(".js-select-tool-btn")
@@ -150,7 +155,6 @@ $(function () {
 
     function appendToolsToFormData(form, formData) {
       const positions = form.querySelectorAll(".js-technical-information");
-      console.log("positions", positions);
       positions.forEach((position) => {
         const index = position.dataset.positionIndex;
 
@@ -233,6 +237,86 @@ $(function () {
           ? btn.classList.remove("active")
           : btn.classList.add("active");
       });
+    }
+
+    /** Рендер полей формы */
+    function renderParameters(block, schema, positionIndex) {
+      const form = block.querySelector(".production-request__parameters-form");
+      form.innerHTML = "";
+
+      schema.fields.forEach((field) => {
+        let element;
+
+        if (field.type === "select") {
+          element = renderSelect(field, positionIndex);
+        } else if (field.type === "textarea") {
+          element = renderTextarea(field, positionIndex);
+        } else {
+          element = renderInput(field, positionIndex);
+        }
+
+        form.appendChild(element);
+      });
+
+      initChoices(form);
+    }
+
+    /** Рендер инпута */
+    function renderInput(field, positionIndex) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "inputbox";
+
+      const input = document.createElement("input");
+      input.type = field.type || "text";
+      input.name = `positions[${positionIndex}][${field.name}]`;
+      input.id = `${field.name}_${positionIndex}`;
+      input.placeholder = "";
+      input.className = "input production-request__parameters-form-input";
+
+      const label = document.createElement("label");
+      label.className = "label noselect";
+      label.setAttribute("for", input.id);
+      label.textContent = field.label;
+
+      wrapper.append(input, label);
+
+      return wrapper;
+    }
+
+    /** Рендер селекта */
+    function renderSelect(field, positionIndex) {
+      const select = document.createElement("select");
+
+      select.name = `positions[${positionIndex}][${field.name}]`;
+      select.id = `${field.name}_${positionIndex}`;
+      select.className = "js-choice";
+
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = field.label;
+      select.appendChild(placeholder);
+
+      field.options.forEach((opt) => {
+        const option = document.createElement("option");
+        option.value = opt.value;
+        option.textContent = opt.label;
+        select.appendChild(option);
+      });
+
+      return select;
+    }
+
+    /** Рендер textarea */
+    function renderTextarea(field, positionIndex) {
+      const textarea = document.createElement("textarea");
+
+      textarea.name = `positions[${positionIndex}][${field.name}]`;
+      textarea.id = `${field.name}_${positionIndex}`;
+      textarea.placeholder = field.label || "";
+      textarea.className =
+        "textarea production-request__parameters-form-textarea";
+
+      return textarea;
     }
   })();
 });
