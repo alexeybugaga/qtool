@@ -5,16 +5,13 @@ export const TOOL_SCHEMAS = {
       {
         type: "number",
         name: "amount",
-        label: "Количество, шт",
-        required: true,
-        min: 0,
+        label: "Количество",
         unit: "шт",
       },
       {
         type: "select",
         name: "coating",
         label: "Покрытие",
-        required: true,
         options: [
           { value: "Алмазное", label: "Алмазное" },
           { value: "Без покрытия", label: "Без покрытия" },
@@ -25,7 +22,6 @@ export const TOOL_SCHEMAS = {
         type: "select",
         name: "processing-material",
         label: "Материал обработки",
-        required: true,
         options: [
           { value: "H (твердые материалы)", label: "H (твердые материалы)" },
           { value: "K (чугун)", label: "K (чугун)" },
@@ -39,7 +35,6 @@ export const TOOL_SCHEMAS = {
         type: "select",
         name: "milling-type",
         label: "Тип фрезы",
-        required: true,
         options: [
           { value: "Галтельная", label: "Галтельная" },
           {
@@ -60,7 +55,6 @@ export const TOOL_SCHEMAS = {
         type: "select",
         name: "cooling-type",
         label: "Тип охлаждения",
-        required: true,
         options: [
           { value: "Внутреннее", label: "Внутреннее" },
           { value: "Наружнее", label: "Наружнее" },
@@ -71,7 +65,6 @@ export const TOOL_SCHEMAS = {
         type: "select",
         name: "hrc",
         label: "HRC",
-        required: true,
         options: [
           { value: "< 35 HRC", label: "< 35 HRC" },
           { value: "< 40 HRC", label: "< 40 HRC" },
@@ -85,39 +78,30 @@ export const TOOL_SCHEMAS = {
         type: "number",
         name: "total-length",
         label: "Общая длина",
-        required: true,
-        min: 0,
         unit: "мм",
       },
       {
         type: "number",
         name: "length-working-part",
         label: "Длина рабочей части",
-        required: true,
-        min: 0,
         unit: "мм",
       },
       {
         type: "number",
         name: "diameter-working-part",
         label: "Диаметр рабочей части",
-        required: true,
-        min: 0,
         unit: "мм",
       },
       {
         type: "number",
         name: "shank-diameter",
         label: "Диаметр хвостовика",
-        required: true,
-        min: 0,
         unit: "мм",
       },
       {
         type: "number",
         name: "number-cutting-edges",
         label: "Число режущих кромок",
-        min: 0,
         unit: "мм",
       },
       {
@@ -135,15 +119,12 @@ export const TOOL_SCHEMAS = {
         type: "number",
         name: "amount",
         label: "Количество",
-        required: true,
-        min: 0,
         unit: "шт",
       },
       {
         type: "select",
         name: "view",
         label: "Вид",
-        required: false,
         options: [
           { value: "Длинное", label: "Длинное" },
           { value: "Сверхдлинное", label: "Сверхдлинное" },
@@ -155,15 +136,12 @@ export const TOOL_SCHEMAS = {
         type: "number",
         name: "drilling-depth",
         label: "Глубина сверления",
-        required: true,
-        min: 0,
         unit: "мм",
       },
       {
         type: "select",
         name: "processing-material",
         label: "Материал обработки",
-        required: false,
         options: [
           { value: "H (твердые материалы)", label: "H (твердые материалы)" },
           { value: "K (чугун)", label: "K (чугун)" },
@@ -174,15 +152,13 @@ export const TOOL_SCHEMAS = {
         ],
       },
       {
-        type: "text",
         name: "tool-material",
-        label: "Материал инстурмента",
+        label: "Материал инструмента",
       },
       {
         type: "select",
         name: "cooling-type",
         label: "Тип охлаждения",
-        required: true,
         options: [
           { value: "Внутреннее", label: "Внутреннее" },
           { value: "Наружнее", label: "Наружнее" },
@@ -193,7 +169,6 @@ export const TOOL_SCHEMAS = {
         type: "select",
         name: "hrc",
         label: "HRC",
-        required: true,
         options: [
           { value: "< 50 HRC", label: "< 50 HRC" },
           { value: "< 55 HRC", label: "< 55 HRC" },
@@ -205,46 +180,571 @@ export const TOOL_SCHEMAS = {
         type: "number",
         name: "case-diameter",
         label: "Диаметр корпуса",
-        min: 0,
         unit: "мм",
       },
       {
         type: "number",
         name: "diameter",
         label: "Диаметр",
-        min: 0,
         unit: "мм",
       },
       {
         type: "number",
         name: "total-length",
         label: "Общая длина",
-        required: true,
-        min: 0,
         unit: "мм",
       },
       {
         type: "number",
         name: "length-working-part",
         label: "Длина рабочей части",
-        required: true,
-        min: 0,
         unit: "мм",
       },
       {
         type: "number",
         name: "diameter-working-part",
         label: "Диаметр рабочей части",
-        required: true,
-        min: 0,
         unit: "мм",
       },
       {
         type: "number",
         name: "shank-diameter",
         label: "Диаметр хвостовика",
-        required: true,
-        min: 0,
+        unit: "мм",
+      },
+      {
+        type: "textarea",
+        name: "comment",
+        label: "Здесь вы можете оставить комментарий к заказу",
+      },
+    ],
+  },
+  threadMillingCutters: {
+    label: "Резьбофрезы",
+    fields: [
+      {
+        type: "select",
+        name: "view",
+        label: "Вид",
+        options: [
+          { value: "Двухвитковые", label: "Двухвитковые" },
+          { value: "Одновитковые", label: "Одновитковые" },
+          { value: "Полновитковые", label: "Полновитковые" },
+          { value: "Трехвитковые", label: "Трехвитковые" },
+        ],
+      },
+      {
+        type: "select",
+        name: "coating",
+        label: "Покрытие",
+        options: [
+          { value: "Без покрытия", label: "Без покрытия" },
+          {
+            value: "Алмазоподобное (TA-C / алмазоподобный углерод)",
+            label: "Алмазоподобное (TA-C / алмазоподобный углерод)",
+          },
+          { value: "Многослойное покрытие", label: "Многослойное покрытие" },
+        ],
+      },
+      {
+        type: "select",
+        name: "processing-material",
+        label: "Материал обработки",
+        options: [
+          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
+          { value: "K (чугун)", label: "K (чугун)" },
+          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
+          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
+          { value: "P (сталь)", label: "P (сталь)" },
+          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
+        ],
+      },
+      {
+        type: "number",
+        name: "working-length",
+        label: "Рабочая длина",
+        unit: "мм",
+      },
+      {
+        type: "select",
+        name: "cooling-type",
+        label: "Тип охлаждения",
+        options: [
+          { value: "Внутреннее", label: "Внутреннее" },
+          { value: "Внешнее", label: "Внешнее" },
+          { value: "Нет", label: "Нет" },
+        ],
+      },
+      {
+        name: "thread-type",
+        label: "Тип резьбы",
+      },
+      {
+        type: "number",
+        name: "thread-diameter",
+        label: "Диаметр резьбы",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "thread-step",
+        label: "Шаг",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "diameter-working-part",
+        label: "Диаметр рабочей части",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "shank-diameter",
+        label: "Диаметр хвостовика",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "total-length",
+        label: "Общая длина",
+        unit: "мм",
+      },
+      {
+        type: "select",
+        name: "hrc",
+        label: "HRC",
+        options: [
+          { value: "< 50 HRC", label: "< 50 HRC" },
+          { value: "< 55 HRC", label: "< 55 HRC" },
+          { value: "< 60 HRC", label: "< 60 HRC" },
+          { value: "< 68 HRC", label: "< 68 HRC" },
+        ],
+      },
+      {
+        type: "textarea",
+        name: "comment",
+        label: "Здесь вы можете оставить комментарий к заказу",
+      },
+    ],
+  },
+  taps: {
+    label: "Метчики",
+    fields: [
+      {
+        type: "number",
+        name: "amount",
+        label: "Количество",
+        unit: "шт",
+      },
+      {
+        type: "number",
+        name: "kit",
+        label: "Комплект",
+        unit: "шт",
+      },
+      {
+        type: "select",
+        name: "view",
+        label: "Вид",
+        options: [
+          { value: "Гаечный", label: "Гаечный" },
+          { value: "Машинно-ручной", label: "Машинно-ручной" },
+          { value: "Машинный", label: "Машинный" },
+          { value: "Ручной", label: "Ручной" },
+        ],
+      },
+      {
+        type: "select",
+        name: "tap-material",
+        label: "Материал метчика",
+        options: [
+          { value: "Твердый сплав", label: "Твердый сплав" },
+          { value: "Hss", label: "Hss" },
+          { value: "Hss-e", label: "Hss-e" },
+          { value: "Hss-v", label: "Hss-v" },
+          { value: "Hss-e pm", label: "Hss-e pm" },
+        ],
+      },
+      {
+        type: "select",
+        name: "coating",
+        label: "Покрытие",
+        options: [
+          { value: "С покрытием", label: "С покрытием" },
+          { value: "Без покрытия", label: "Без покрытия" },
+        ],
+      },
+      {
+        type: "select",
+        name: "processing-material",
+        label: "Материал обработки",
+        options: [
+          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
+          { value: "K (чугун)", label: "K (чугун)" },
+          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
+          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
+          { value: "P (сталь)", label: "P (сталь)" },
+          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
+        ],
+      },
+      {
+        type: "select",
+        name: "tap-type",
+        label: "Тип метчика",
+        multiple: true,
+        options: [
+          { value: "Бесстружечный", label: "Бесстружечный" },
+          { value: "Дюймовый", label: "Дюймовый" },
+          { value: "Метрический", label: "Метрический" },
+          { value: "Конический", label: "Конический" },
+          { value: "Левый", label: "Левый" },
+          { value: "Трапецеидальный", label: "Трапецеидальный" },
+          { value: "Трубно-конический", label: "Трубно-конический" },
+          { value: "Трубный", label: "Трубный" },
+          { value: "Шахматный", label: "Шахматный" },
+        ],
+      },
+      {
+        type: "number",
+        name: "thread-step",
+        label: "Шаг резьбы",
+        unit: "мм",
+      },
+      {
+        type: "select",
+        name: "cooling-type",
+        label: "Тип охлаждения",
+        options: [
+          { value: "Внутреннее", label: "Внутреннее" },
+          { value: "Внешнее", label: "Внешнее" },
+          { value: "Нет", label: "Нет" },
+        ],
+      },
+      {
+        type: "select",
+        name: "tap-direction-rotation",
+        label: "Направление вращения метчика",
+        options: [
+          { value: "Левое", label: "Левое" },
+          { value: "Правое", label: "Правое" },
+        ],
+      },
+      {
+        type: "select",
+        name: "tap-groove",
+        label: "Канавка метчика",
+        options: [
+          { value: "Прямая", label: "Прямая" },
+          {
+            value: "Прямая со спиральной подточкой",
+            label: "Прямая со спиральной подточкой",
+          },
+          { value: "Спиральная", label: "Спиральная" },
+        ],
+      },
+      {
+        type: "select",
+        name: "hrc",
+        label: "HRC",
+        options: [
+          { value: "< 50 HRC", label: "< 50 HRC" },
+          { value: "< 55 HRC", label: "< 55 HRC" },
+          { value: "< 60 HRC", label: "< 60 HRC" },
+          { value: "< 68 HRC", label: "< 68 HRC" },
+        ],
+      },
+      {
+        type: "number",
+        name: "total-length",
+        label: "Общая длина",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "length-cutting-part",
+        label: "Длина режущей части",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "diameter-working-part",
+        label: "Диаметр рабочей части",
+        unit: "мм",
+      },
+      {
+        type: "select",
+        name: "tap-standart",
+        label: "Стандарт метчика",
+        options: [
+          {
+            value: "ГОСТ 3266-81 (аналог ISO 522)",
+            label: "ГОСТ 3266-81 (аналог ISO 522)",
+          },
+          { value: "Усиленный хвостовик", label: "Усиленный хвостовик" },
+          { value: "С шейкой", label: "С шейкой" },
+          { value: "Проходной хвостовик", label: "Проходной хвостовик" },
+          { value: "Удлиненный проходной", label: "Удлиненный проходной" },
+          { value: "DIN 371", label: "DIN 371" },
+          { value: "DIN 376", label: "DIN 376" },
+        ],
+      },
+      {
+        type: "number",
+        name: "shank-diameter",
+        label: "Диаметр хвостовика",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "square-size",
+        label: "Размер квадрата",
+        unit: "мм",
+      },
+      {
+        type: "textarea",
+        name: "comment",
+        label: "Здесь вы можете оставить комментарий к заказу",
+      },
+    ],
+  },
+  dies: {
+    label: "Плашки",
+    fields: [
+      {
+        type: "number",
+        name: "amount",
+        label: "Количество",
+        unit: "шт",
+      },
+      {
+        type: "select",
+        name: "thread-type",
+        label: "Тип резьбы",
+        options: [
+          { value: "М (Метрическая)", label: "М (Метрическая)" },
+          {
+            value: "G (Трубная цилиндрическая)",
+            label: "G (Трубная цилиндрическая)",
+          },
+        ],
+      },
+      {
+        type: "select",
+        name: "number-chip-holes-W",
+        label: "Количество стружечных отверстий W, шт",
+        options: [
+          { value: "3", label: "3" },
+          {
+            value: "4",
+            label: "4",
+          },
+          {
+            value: "5",
+            label: "5",
+          },
+          {
+            value: "6",
+            label: "6",
+          },
+        ],
+      },
+      {
+        type: "select",
+        name: "processing-material",
+        label: "Материал обработки",
+        options: [
+          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
+          { value: "K (чугун)", label: "K (чугун)" },
+          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
+          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
+          { value: "P (сталь)", label: "P (сталь)" },
+          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
+        ],
+      },
+      {
+        type: "select",
+        name: "thread-direction",
+        label: "Направление резьбы",
+        options: [
+          { value: "Правое", label: "Правое" },
+          { value: "Левое", label: "Левое" },
+        ],
+      },
+      {
+        type: "select",
+        name: "hrc",
+        label: "HRC",
+        options: [
+          { value: "< 50 HRC", label: "< 50 HRC" },
+          { value: "< 55 HRC", label: "< 55 HRC" },
+          { value: "< 60 HRC", label: "< 60 HRC" },
+          { value: "< 68 HRC", label: "< 68 HRC" },
+        ],
+      },
+      {
+        type: "number",
+        name: "thread-size",
+        label: "Размер резьбы",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "thread-step",
+        label: "Шаг резьбы",
+        unit: "мм",
+      },
+      {
+        type: "textarea",
+        name: "comment",
+        label: "Здесь вы можете оставить комментарий к заказу",
+      },
+    ],
+  },
+  reamers: {
+    label: "Развертки",
+    fields: [
+      {
+        type: "number",
+        name: "amount",
+        label: "Количество",
+        unit: "шт",
+      },
+      {
+        type: "select",
+        name: "reamers-type",
+        label: "Тип",
+        options: [
+          { value: "Машинный", label: "Машинный" },
+          {
+            value: "Ручной",
+            label: "Ручной",
+          },
+        ],
+      },
+      {
+        type: "select",
+        name: "view",
+        label: "Вид",
+        options: [
+          {
+            value: "C твердосплавными напайными пластинами",
+            label: "C твердосплавными напайными пластинами",
+          },
+          { value: "Цельный твердосплавный", label: "Цельный твердосплавный" },
+          { value: "HSS*", label: "СреHSS*днее" },
+        ],
+      },
+      {
+        type: "select",
+        name: "coating",
+        label: "Покрытие",
+        options: [
+          { value: "Есть", label: "Есть" },
+          { value: "Нет", label: "Нет" },
+        ],
+      },
+      {
+        type: "select",
+        name: "hole-type",
+        label: "Тип отверстия",
+        options: [
+          { value: "Глухое", label: "Глухое" },
+          { value: "Сквозное", label: "Сквозное" },
+        ],
+      },
+      {
+        type: "select",
+        name: "shank-type",
+        label: "Тип отверстия",
+        options: [
+          { value: "Цилиндрический", label: "Цилиндрический" },
+          { value: "Конический", label: "Конический" },
+        ],
+      },
+      {
+        name: "amount",
+        label: "Размер",
+        additional:
+          "Диаметр и размер квадрата для ручных, размер конуса для кх",
+      },
+      {
+        type: "select",
+        name: "processing-material",
+        label: "Материал обработки",
+        options: [
+          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
+          { value: "K (чугун)", label: "K (чугун)" },
+          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
+          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
+          { value: "P (сталь)", label: "P (сталь)" },
+          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
+        ],
+      },
+      {
+        type: "select",
+        name: "cutting-direction",
+        label: "Направление резания",
+        options: [
+          { value: "Правое", label: "Правое" },
+          { value: "Левое", label: "Левое" },
+        ],
+      },
+      {
+        type: "select",
+        name: "number-teeth",
+        label: "Количество зубьев",
+        options: [
+          { value: "4", label: "4" },
+          { value: "6", label: "6" },
+        ],
+      },
+      {
+        type: "select",
+        name: "cooling-type",
+        label: "Тип охлаждения",
+        options: [
+          { value: "Внутреннее", label: "Внутреннее" },
+          { value: "Внешнее", label: "Внешнее" },
+          { value: "Нет", label: "Нет" },
+        ],
+      },
+      {
+        type: "select",
+        name: "accuracy-quality",
+        label: "Квалитет точности",
+        options: [
+          { value: "H7", label: "H7" },
+          { value: "H8", label: "H8" },
+          { value: "H9", label: "H9" },
+        ],
+      },
+      {
+        type: "select",
+        name: "hrc",
+        label: "HRC",
+        options: [
+          { value: "< 50 HRC", label: "< 50 HRC" },
+          { value: "< 55 HRC", label: "< 55 HRC" },
+          { value: "< 60 HRC", label: "< 60 HRC" },
+          { value: "< 68 HRC", label: "< 68 HRC" },
+        ],
+      },
+      {
+        type: "number",
+        name: "total-length",
+        label: "Общая длина",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "working-length",
+        label: "Рабочая длина",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "diameter-working-part",
+        label: "Диаметр рабочей части",
         unit: "мм",
       },
       {

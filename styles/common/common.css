@@ -275,6 +275,7 @@ input[type="number"] {
 /* -- Select -- */
 .choices {
   margin: 0;
+  height: fit-content;
 }
 
 .choices__inner {

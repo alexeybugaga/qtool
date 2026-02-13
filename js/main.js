@@ -222,6 +222,11 @@ $(function () {
           searchEnabled: false,
           itemSelectText: "",
           shouldSort: false,
+          removeItemButton: select.multiple,
+          placeholder: select.multiple ? true : false,
+          placeholderValue: select.multiple
+            ? select.dataset.placeholder
+            : undefined,
         });
       });
     }
@@ -270,6 +275,7 @@ $(function () {
       input.type = field.type || "text";
       input.name = `positions[${positionIndex}][${field.name}]`;
       input.id = `${field.name}_${positionIndex}`;
+      input.min = field.type === "number" ? field.min || 0 : undefined;
       input.placeholder = "";
       input.className = "input production-request__parameters-form-input";
 
@@ -290,11 +296,18 @@ $(function () {
       select.name = `positions[${positionIndex}][${field.name}]`;
       select.id = `${field.name}_${positionIndex}`;
       select.className = "js-choice";
+      select.dataset.placeholder = field.label;
 
-      const placeholder = document.createElement("option");
-      placeholder.value = "";
-      placeholder.textContent = field.label;
-      select.appendChild(placeholder);
+      if (field.multiple) {
+        select.multiple = true;
+      }
+
+      if (!field.multiple) {
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = field.label;
+        select.appendChild(placeholder);
+      }
 
       field.options.forEach((opt) => {
         const option = document.createElement("option");
