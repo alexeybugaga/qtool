@@ -288,7 +288,7 @@ export const TOOL_SCHEMAS = {
       {
         type: "number",
         name: "thread-step",
-        label: "Шаг",
+        label: "Шаг резьбы",
         unit: "мм",
       },
       {
@@ -423,7 +423,7 @@ export const TOOL_SCHEMAS = {
       {
         type: "select",
         name: "tap-direction-rotation",
-        label: "Направление вращения метчика",
+        label: "Направление вращения",
         options: [
           { value: "Левое", label: "Левое" },
           { value: "Правое", label: "Правое" },
@@ -531,7 +531,7 @@ export const TOOL_SCHEMAS = {
       {
         type: "select",
         name: "number-chip-holes-W",
-        label: "Количество стружечных отверстий W, шт",
+        label: "Кол-во стружечных отв-й W",
         options: [
           { value: "3", label: "3" },
           {
@@ -631,7 +631,7 @@ export const TOOL_SCHEMAS = {
             label: "C твердосплавными напайными пластинами",
           },
           { value: "Цельный твердосплавный", label: "Цельный твердосплавный" },
-          { value: "HSS*", label: "СреHSS*днее" },
+          { value: "HSS*", label: "HSS*" },
         ],
       },
       {
@@ -746,6 +746,190 @@ export const TOOL_SCHEMAS = {
         name: "diameter-working-part",
         label: "Диаметр рабочей части",
         unit: "мм",
+      },
+      {
+        type: "textarea",
+        name: "comment",
+        label: "Здесь вы можете оставить комментарий к заказу",
+      },
+    ],
+  },
+  countersink: {
+    label: "Зенкера",
+    fields: [
+      {
+        type: "number",
+        name: "amount",
+        label: "Количество",
+        unit: "шт",
+      },
+      {
+        type: "select",
+        name: "view",
+        label: "Вид",
+        options: [
+          {
+            value: "Насадной",
+            label: "Насадной",
+          },
+          { value: "С пластинами", label: "С пластинами" },
+          { value: "Цельный", label: "Цельный" },
+        ],
+      },
+      {
+        type: "select",
+        name: "processing-material",
+        label: "Материал обработки",
+        options: [
+          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
+          { value: "K (чугун)", label: "K (чугун)" },
+          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
+          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
+          { value: "P (сталь)", label: "P (сталь)" },
+          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
+        ],
+      },
+      {
+        type: "select",
+        name: "accuracy-quality",
+        label: "Квалитет точности",
+        options: [
+          { value: "H8", label: "H8" },
+          { value: "U8", label: "U8" },
+        ],
+      },
+      {
+        type: "select",
+        name: "morse-taper",
+        label: "Конус Морзе",
+        options: [
+          { value: "1", label: "1" },
+          { value: "2", label: "2" },
+          { value: "3", label: "3" },
+          { value: "4", label: "4" },
+        ],
+      },
+      {
+        type: "select",
+        name: "hrc",
+        label: "HRC",
+        options: [
+          { value: "< 50 HRC", label: "< 50 HRC" },
+          { value: "< 55 HRC", label: "< 55 HRC" },
+          { value: "< 60 HRC", label: "< 60 HRC" },
+          { value: "< 68 HRC", label: "< 68 HRC" },
+        ],
+      },
+      {
+        type: "number",
+        name: "length",
+        label: "Длина",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "length-cutting-part",
+        label: "Длина режущей части",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "diameter",
+        label: "Диаметр",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "mounting-hole-diameter",
+        label: "Диаметр посадочного отв-я",
+        unit: "мм",
+      },
+      {
+        type: "textarea",
+        name: "comment",
+        label: "Здесь вы можете оставить комментарий к заказу",
+      },
+    ],
+  },
+  calibers: {
+    label: "Калибры",
+    fields: [
+      {
+        type: "number",
+        name: "amount",
+        label: "Количество",
+        unit: "шт",
+      },
+      {
+        type: "select",
+        name: "view",
+        label: "Вид",
+        multiple: true,
+        options: [
+          {
+            value: "Калибр для малых отверстий",
+            label: "Калибр для малых отверстий",
+          },
+          { value: "Гладкий", label: "Гладкий" },
+          { value: "Резьбовой", label: "Резьбовой" },
+          { value: "Предельный", label: "Предельный" },
+          { value: "Нормальный", label: "Нормальный" },
+          { value: "Регулируемый", label: "Регулируемый" },
+          { value: "Конусный", label: "Конусный" },
+          { value: "Шпоночный", label: "Шпоночный" },
+          { value: "Шлицевый", label: "Шлицевый" },
+          { value: "Профильный", label: "Профильный" },
+        ],
+      },
+      {
+        type: "number",
+        name: "diameter",
+        label: "Диаметр",
+        unit: "мм",
+      },
+      {
+        name: "accuracy-quality",
+        label: "Точность (квалитет)",
+      },
+      {
+        type: "number",
+        name: "size",
+        label: "Размер",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "thread-step",
+        label: "Шаг резьбы",
+        unit: "мм",
+      },
+      {
+        name: "thread-type",
+        label: "Тип резьбы",
+      },
+      {
+        type: "select",
+        name: "processing-material",
+        label: "Материал обработки",
+        options: [
+          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
+          { value: "K (чугун)", label: "K (чугун)" },
+          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
+          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
+          { value: "P (сталь)", label: "P (сталь)" },
+          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
+        ],
+      },
+      {
+        type: "select",
+        name: "hrc",
+        label: "HRC",
+        options: [
+          { value: "< 50 HRC", label: "< 50 HRC" },
+          { value: "< 55 HRC", label: "< 55 HRC" },
+          { value: "< 60 HRC", label: "< 60 HRC" },
+          { value: "< 68 HRC", label: "< 68 HRC" },
+        ],
       },
       {
         type: "textarea",

@@ -110,6 +110,25 @@ $(function () {
       initChoices(clone);
       updateRemoveButtons();
 
+      /** Показать форму при первой загрузке */
+
+      const firstToolBtn = clone.querySelector(".js-select-tool-btn");
+
+      if (firstToolBtn) {
+        firstToolBtn.classList.add("active");
+
+        const toolType = firstToolBtn.dataset.productValue;
+        const schema = TOOL_SCHEMAS[toolType];
+
+        renderParameters(clone, schema, index);
+
+        const title =
+          firstToolBtn.dataset.parametersTitle ?? "Введите параметры";
+
+        const parametersTitle = clone.querySelector(".js-parameters-title");
+        if (parametersTitle) parametersTitle.textContent = title;
+      }
+
       index++;
     }
 
@@ -218,10 +237,13 @@ $(function () {
 
     function initChoices(block) {
       block.querySelectorAll(".js-choice").forEach((select) => {
-        new Choices(select, {
+        const instance = new Choices(select, {
           searchEnabled: false,
+          searchChoices: false,
           itemSelectText: "",
           shouldSort: false,
+          renderSelectedChoices: "always",
+          // delimiter: ",",
           removeItemButton: select.multiple,
           placeholder: select.multiple ? true : false,
           placeholderValue: select.multiple

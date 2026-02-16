@@ -298,6 +298,11 @@ input[type="number"] {
   font-weight: 500;
 }
 
+.choices__list[aria-expanded] .choices__item.is-selected {
+  background-color: var(--color-text);
+  color: var(--color-white);
+}
+
 .choices__list--single .choices__item {
   color: var(--color-gray-opacity-75);
 }
@@ -323,8 +328,77 @@ input[type="number"] {
   border-top: 2px solid var(--color-gray-opacity-75);
   border-left: 2px solid var(--color-gray-opacity-75);
 }
+
 .choices__list--single {
   padding: 4px 20px 4px 4px;
+}
+
+.choices__list--multiple {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.choices__item--selectable {
+  /* max-width: 120px; */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.choices__list[aria-multiselectable] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.choices__list[aria-multiselectable] .choices__item {
+  border: 1px solid rgba(48, 59, 69, 0.25);
+}
+
+.choices__list[aria-multiselectable] .choices__item.is-selected {
+  border-color: var(--color-text);
+  background-color: var(--color-text);
+  color: var(--color-white);
+}
+
+.choices {
+  min-width: 0;
+}
+
+.choices__list--multiple .choices__item {
+  position: relative;
+  font-size: 13px;
+  padding: 2px 4px;
+  margin: 0;
+  flex-shrink: 0;
+  background-color: transparent;
+  color: var(--color-text);
+  border: none;
+}
+
+.choices__list--multiple .choices__item .choices__button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-image: none;
+  border: none;
+}
+
+.choices__list--multiple .choices__item.is-highlighted {
+  background-color: transparent;
+  border: none;
+}
+
+.choices__input {
+  background-color: transparent;
+}
+
+.choices__input.choices__input--cloned[aria-activedescendant] {
+  display: none;
 }
 
 @media (min-width: 769px) {
@@ -333,7 +407,8 @@ input[type="number"] {
   }
 
   .choices__list--dropdown .choices__item,
-  .choices__list[aria-expanded] .choices__item {
+  .choices__list[aria-expanded] .choices__item,
+  .choices__list--multiple .choices__item {
     font-size: 15px;
   }
 }
