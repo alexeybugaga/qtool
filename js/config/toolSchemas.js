@@ -161,7 +161,7 @@ export const TOOL_SCHEMAS = {
         label: "Тип охлаждения",
         options: [
           { value: "Внутреннее", label: "Внутреннее" },
-          { value: "Наружнее", label: "Наружнее" },
+          { value: "Внешнее", label: "Внешнее" },
           { value: "Нет", label: "Нет" },
         ],
       },
@@ -223,6 +223,12 @@ export const TOOL_SCHEMAS = {
     label: "Резьбофрезы",
     fields: [
       {
+        type: "number",
+        name: "amount",
+        label: "Количество",
+        unit: "шт",
+      },
+      {
         type: "select",
         name: "view",
         label: "Вид",
@@ -259,12 +265,7 @@ export const TOOL_SCHEMAS = {
           { value: "S (жаропрочные)", label: "S (жаропрочные)" },
         ],
       },
-      {
-        type: "number",
-        name: "working-length",
-        label: "Рабочая длина",
-        unit: "мм",
-      },
+
       {
         type: "select",
         name: "cooling-type",
@@ -307,6 +308,12 @@ export const TOOL_SCHEMAS = {
         type: "number",
         name: "total-length",
         label: "Общая длина",
+        unit: "мм",
+      },
+      {
+        type: "number",
+        name: "working-length",
+        label: "Рабочая длина",
         unit: "мм",
       },
       {

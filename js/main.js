@@ -243,12 +243,12 @@ $(function () {
           itemSelectText: "",
           shouldSort: false,
           renderSelectedChoices: "always",
-          // delimiter: ",",
           removeItemButton: select.multiple,
           placeholder: select.multiple ? true : false,
           placeholderValue: select.multiple
             ? select.dataset.placeholder
             : undefined,
+          duplicateItemsAllowed: true,
         });
       });
     }
@@ -304,7 +304,9 @@ $(function () {
       const label = document.createElement("label");
       label.className = "label noselect";
       label.setAttribute("for", input.id);
-      label.textContent = field.label;
+      label.textContent = field.unit
+        ? `${field.label}, ${field.unit}`
+        : field.label;
 
       wrapper.append(input, label);
 
