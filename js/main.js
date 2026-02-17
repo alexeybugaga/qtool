@@ -1,3 +1,5 @@
+import { TOOL_SCHEMAS } from "./config/toolSchemas.js";
+
 $(function () {
   (() => {
     /** Подключение slick slider */
@@ -92,7 +94,6 @@ $(function () {
     const template = document.querySelector("#technical-template");
 
     let index = 1;
-
     addPosition();
 
     function addPosition() {
@@ -107,6 +108,25 @@ $(function () {
 
       initChoices(clone);
       updateRemoveButtons();
+
+      /** Показать форму при первой загрузке */
+
+      const firstToolBtn = clone.querySelector(".js-select-tool-btn");
+
+      if (firstToolBtn) {
+        firstToolBtn.classList.add("active");
+
+        const toolType = firstToolBtn.dataset.productValue;
+        const schema = TOOL_SCHEMAS[toolType];
+
+        renderParameters(clone, schema, index);
+
+        const title =
+          firstToolBtn.dataset.parametersTitle ?? "Введите параметры";
+
+        const parametersTitle = clone.querySelector(".js-parameters-title");
+        if (parametersTitle) parametersTitle.textContent = title;
+      }
 
       index++;
     }
@@ -128,6 +148,10 @@ $(function () {
 
       if (toolBtn) {
         const block = toolBtn.closest(".js-technical-information");
+        const positionIndex = block.dataset.positionIndex;
+        const toolType = toolBtn.dataset.productValue;
+        const schema = TOOL_SCHEMAS[toolType];
+        renderParameters(block, schema, positionIndex);
 
         block
           .querySelectorAll(".js-select-tool-btn")
@@ -150,7 +174,6 @@ $(function () {
 
     function appendToolsToFormData(form, formData) {
       const positions = form.querySelectorAll(".js-technical-information");
-      console.log("positions", positions);
       positions.forEach((position) => {
         const index = position.dataset.positionIndex;
 
@@ -175,7 +198,21 @@ $(function () {
       consentLabel.classList.remove("error");
       const formData = new FormData(form);
       appendToolsToFormData(form, formData);
-      const data = Object.fromEntries(formData);
+
+      const data = {};
+
+      for (const [key, value] of formData.entries()) {
+        if (data[key]) {
+          if (Array.isArray(data[key])) {
+            data[key].push(value);
+          } else {
+            data[key] = [data[key], value];
+          }
+        } else {
+          data[key] = value;
+        }
+      }
+
       console.log(data);
 
       if (!consent.checked) {
@@ -214,11 +251,39 @@ $(function () {
 
     function initChoices(block) {
       block.querySelectorAll(".js-choice").forEach((select) => {
-        new Choices(select, {
+        const instance = new Choices(select, {
           searchEnabled: false,
+          searchChoices: false,
           itemSelectText: "",
           shouldSort: false,
+          renderSelectedChoices: "always",
+          placeholder: select.multiple ? true : false,
+          placeholderValue: select.multiple
+            ? select.dataset.placeholder
+            : undefined,
+          closeDropdownOnSelect: !select.multiple,
         });
+
+        if (select.multiple) {
+          const dropdown = instance.dropdown.element;
+
+          dropdown.addEventListener(
+            "click",
+            (e) => {
+              const choiceEl = e.target.closest(".choices__item--choice");
+              if (!choiceEl) return;
+
+              const value = choiceEl.dataset.value;
+
+              if (choiceEl.getAttribute("aria-selected") === "true") {
+                e.stopPropagation();
+                e.preventDefault();
+                instance.removeActiveItemsByValue(value);
+              }
+            },
+            true,
+          );
+        }
       });
     }
 
@@ -233,6 +298,96 @@ $(function () {
           ? btn.classList.remove("active")
           : btn.classList.add("active");
       });
+    }
+
+    /** Рендер полей формы */
+    function renderParameters(block, schema, positionIndex) {
+      const form = block.querySelector(".production-request__parameters-form");
+      form.innerHTML = "";
+
+      schema.fields.forEach((field) => {
+        let element;
+
+        if (field.type === "select") {
+          element = renderSelect(field, positionIndex);
+        } else if (field.type === "textarea") {
+          element = renderTextarea(field, positionIndex);
+        } else {
+          element = renderInput(field, positionIndex);
+        }
+
+        form.appendChild(element);
+      });
+
+      initChoices(form);
+    }
+
+    /** Рендер инпута */
+    function renderInput(field, positionIndex) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "inputbox";
+
+      const input = document.createElement("input");
+      input.type = field.type || "text";
+      input.name = `positions[${positionIndex}][${field.name}]`;
+      input.id = `${field.name}_${positionIndex}`;
+      input.min = field.type === "number" ? field.min || 0 : undefined;
+      input.placeholder = "";
+      input.className = "input production-request__parameters-form-input";
+
+      const label = document.createElement("label");
+      label.className = "label noselect";
+      label.setAttribute("for", input.id);
+      label.textContent = field.unit
+        ? `${field.label}, ${field.unit}`
+        : field.label;
+
+      wrapper.append(input, label);
+
+      return wrapper;
+    }
+
+    /** Рендер селекта */
+    function renderSelect(field, positionIndex) {
+      const select = document.createElement("select");
+
+      select.name = `positions[${positionIndex}][${field.name}]`;
+      select.id = `${field.name}_${positionIndex}`;
+      select.className = "js-choice";
+      select.dataset.placeholder = field.label;
+
+      if (field.multiple) {
+        select.multiple = true;
+      }
+
+      if (!field.multiple) {
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = field.label;
+        select.appendChild(placeholder);
+      }
+
+      field.options.forEach((opt) => {
+        const option = document.createElement("option");
+        option.value = opt.value;
+        option.textContent = opt.label;
+        select.appendChild(option);
+      });
+
+      return select;
+    }
+
+    /** Рендер textarea */
+    function renderTextarea(field, positionIndex) {
+      const textarea = document.createElement("textarea");
+
+      textarea.name = `positions[${positionIndex}][${field.name}]`;
+      textarea.id = `${field.name}_${positionIndex}`;
+      textarea.placeholder = field.label || "";
+      textarea.className =
+        "textarea production-request__parameters-form-textarea";
+
+      return textarea;
     }
   })();
 });

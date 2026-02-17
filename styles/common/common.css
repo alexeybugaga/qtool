@@ -126,7 +126,7 @@ input[type="number"] {
 
 .input,
 .textarea {
-  padding: 15px 19px;
+  padding: 15px;
   height: 56px;
   font-size: 13px;
   line-height: 24px;
@@ -138,7 +138,7 @@ input[type="number"] {
 .label {
   position: absolute;
   top: 50%;
-  left: 20px;
+  left: 16px;
   transform: translateY(-50%);
   font-size: 13px;
   line-height: 24px;
@@ -247,15 +247,15 @@ input[type="number"] {
 
 @media (min-width: 769px) {
   .input {
-    font-size: 15px;
+    font-size: 14px;
   }
   .label {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .textarea {
     min-height: 98px;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .file-label {
@@ -275,10 +275,11 @@ input[type="number"] {
 /* -- Select -- */
 .choices {
   margin: 0;
+  height: fit-content;
 }
 
 .choices__inner {
-  padding: 7.5px 16px;
+  padding: 7.5px 15px 7.5px 11px;
   display: flex;
   min-height: 56px;
   align-items: center;
@@ -291,10 +292,16 @@ input[type="number"] {
 }
 
 .choices__list--dropdown .choices__item,
-.choices__list[aria-expanded] .choices__item {
+.choices__list .choices__item,
+.choices__input {
   font-size: 13px;
   line-height: 24px;
   font-weight: 500;
+}
+
+.choices__list[aria-expanded] .choices__item.is-selected {
+  background-color: var(--color-text);
+  color: var(--color-white);
 }
 
 .choices__list--single .choices__item {
@@ -311,7 +318,7 @@ input[type="number"] {
   border-left: transparent;
   transform: translateY(-50%) rotate(45deg);
   position: absolute;
-  right: 28px;
+  right: 16px;
   top: 50%;
   pointer-events: none;
 }
@@ -322,18 +329,108 @@ input[type="number"] {
   border-top: 2px solid var(--color-gray-opacity-75);
   border-left: 2px solid var(--color-gray-opacity-75);
 }
+
 .choices__list--single {
-  padding: 4px 20px 4px 4px;
+  padding: 4px 12px 4px 4px;
+}
+
+.choices__list--single .choices__item--selectable {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.choices__list--multiple {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.choices__item--selectable {
+  min-width: 0;
+}
+
+.choices__list[aria-multiselectable] {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.choices__list[aria-multiselectable] .choices__item {
+  padding: 4px 11px;
+  font-size: 12px;
+  line-height: 15px;
+  border: 1px solid rgba(48, 59, 69, 0.25);
+}
+
+.choices__list[aria-multiselectable] .choices__item.is-selected {
+  border-color: var(--color-text);
+  background-color: var(--color-text);
+  color: var(--color-white);
+}
+
+.choices {
+  min-width: 0;
+}
+
+.choices__list--multiple .choices__item {
+  position: relative;
+  font-size: 13px;
+  padding: 2px 4px;
+  margin: 0;
+  flex-shrink: 0;
+  background-color: transparent;
+  color: var(--color-gray-opacity-75);
+  border: none;
+}
+
+.choices__list--multiple .choices__item:not(:last-child)::after {
+  content: ",";
+}
+
+.choices__list--multiple .choices__item .choices__button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-image: none;
+  border: none;
+}
+
+.choices__list--multiple .choices__item.is-highlighted {
+  background-color: transparent;
+  border: none;
+}
+
+.choices__input {
+  background-color: transparent;
+}
+
+.choices__list--multiple:has(.choices__item)
+  + .choices__input.choices__input--cloned {
+  display: none;
+}
+
+.choices[data-type="select-multiple"] .choices__list--dropdown {
+  padding: 15px 18px;
+}
+
+.choices__list--multiple .choices__item[data-deletable] {
+  padding-right: 0;
 }
 
 @media (min-width: 769px) {
   .choices__inner {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .choices__list--dropdown .choices__item,
-  .choices__list[aria-expanded] .choices__item {
-    font-size: 15px;
+  .choices__list .choices__item,
+  .choices__list--multiple .choices__item,
+  .choices__input {
+    font-size: 14px;
   }
 }
 

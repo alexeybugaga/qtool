@@ -430,6 +430,7 @@
                               class="production-request__select-tool-item-btn active js-select-tool-btn"
                               type="button"
                               data-product-type="Фрезы"
+                              data-product-value="milling"
                               data-parameters-title="Введите параметры фрезы"
                             >
                               <span
@@ -504,6 +505,7 @@
                               class="production-request__select-tool-item-btn js-select-tool-btn"
                               type="button"
                               data-product-type="Сверла"
+                              data-product-value="drillings"
                               data-parameters-title="Введите параметры сверла"
                             >
                               <span
@@ -560,6 +562,7 @@
                               class="production-request__select-tool-item-btn js-select-tool-btn"
                               type="button"
                               data-product-type="Резьбофрезы"
+                              data-product-value="threadMillingCutters"
                               data-parameters-title="Введите параметры резьбофрезы"
                             >
                               <span
@@ -618,6 +621,7 @@
                               class="production-request__select-tool-item-btn js-select-tool-btn"
                               type="button"
                               data-product-type="Метчики"
+                              data-product-value="taps"
                               data-parameters-title="Введите параметры метчика"
                             >
                               <span
@@ -644,6 +648,7 @@
                               class="production-request__select-tool-item-btn js-select-tool-btn"
                               type="button"
                               data-product-type="Плашки"
+                              data-product-value="dies"
                               data-parameters-title="Введите параметры плашки"
                             >
                               <span
@@ -700,6 +705,7 @@
                               class="production-request__select-tool-item-btn js-select-tool-btn"
                               type="button"
                               data-product-type="Развертки"
+                              data-product-value="reamers"
                               data-parameters-title="Введите параметры развертки"
                             >
                               <span
@@ -738,6 +744,7 @@
                               class="production-request__select-tool-item-btn js-select-tool-btn"
                               type="button"
                               data-product-type="Зенкера"
+                              data-product-value="countersink"
                               data-parameters-title="Введите параметры зенкера"
                             >
                               <span
@@ -794,9 +801,9 @@
                           <li class="production-request__select-tool-item">
                             <button
                               class="production-request__select-tool-item-btn js-select-tool-btn"
-                              disabled
                               type="button"
                               data-product-type="Калибры"
+                              data-product-value="calibers"
                               data-parameters-title="Введите параметры калибра"
                             >
                               <span
@@ -892,7 +899,7 @@
                           >Введите параметры фрезы</span
                         >
                         <div class="production-request__parameters-form">
-                          <div class="inputbox">
+                          <!-- <div class="inputbox">
                             <input
                               type="number"
                               name="amount"
@@ -981,7 +988,7 @@
                             id="comment"
                             placeholder="Здесь Вы можете оставить комментарий к заказу"
                             class="textarea production-request__parameters-form-textarea"
-                          ></textarea>
+                          ></textarea> -->
                         </div>
                       </div>
                     </div>
@@ -1265,6 +1272,6 @@
       src="./assets/js/inputmask/jquery.inputmask.min.js"
     ></script>
 
-    <script type="text/javascript" src="./js/main.js" defer></script>
+    <script type="module" src="./js/main.js" defer></script>
   </body>
 </html>
