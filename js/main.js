@@ -94,7 +94,6 @@ $(function () {
     const template = document.querySelector("#technical-template");
 
     let index = 1;
-
     addPosition();
 
     function addPosition() {
@@ -149,9 +148,10 @@ $(function () {
 
       if (toolBtn) {
         const block = toolBtn.closest(".js-technical-information");
+        const positionIndex = block.dataset.positionIndex;
         const toolType = toolBtn.dataset.productValue;
         const schema = TOOL_SCHEMAS[toolType];
-        renderParameters(block, schema, index);
+        renderParameters(block, schema, positionIndex);
 
         block
           .querySelectorAll(".js-select-tool-btn")
@@ -198,7 +198,21 @@ $(function () {
       consentLabel.classList.remove("error");
       const formData = new FormData(form);
       appendToolsToFormData(form, formData);
-      const data = Object.fromEntries(formData);
+
+      const data = {};
+
+      for (const [key, value] of formData.entries()) {
+        if (data[key]) {
+          if (Array.isArray(data[key])) {
+            data[key].push(value);
+          } else {
+            data[key] = [data[key], value];
+          }
+        } else {
+          data[key] = value;
+        }
+      }
+
       console.log(data);
 
       if (!consent.checked) {
@@ -243,13 +257,33 @@ $(function () {
           itemSelectText: "",
           shouldSort: false,
           renderSelectedChoices: "always",
-          removeItemButton: select.multiple,
           placeholder: select.multiple ? true : false,
           placeholderValue: select.multiple
             ? select.dataset.placeholder
             : undefined,
-          duplicateItemsAllowed: true,
+          closeDropdownOnSelect: !select.multiple,
         });
+
+        if (select.multiple) {
+          const dropdown = instance.dropdown.element;
+
+          dropdown.addEventListener(
+            "click",
+            (e) => {
+              const choiceEl = e.target.closest(".choices__item--choice");
+              if (!choiceEl) return;
+
+              const value = choiceEl.dataset.value;
+
+              if (choiceEl.getAttribute("aria-selected") === "true") {
+                e.stopPropagation();
+                e.preventDefault();
+                instance.removeActiveItemsByValue(value);
+              }
+            },
+            true,
+          );
+        }
       });
     }
 

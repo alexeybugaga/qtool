@@ -126,7 +126,7 @@ input[type="number"] {
 
 .input,
 .textarea {
-  padding: 15px 19px;
+  padding: 15px;
   height: 56px;
   font-size: 13px;
   line-height: 24px;
@@ -138,7 +138,7 @@ input[type="number"] {
 .label {
   position: absolute;
   top: 50%;
-  left: 20px;
+  left: 16px;
   transform: translateY(-50%);
   font-size: 13px;
   line-height: 24px;
@@ -247,15 +247,15 @@ input[type="number"] {
 
 @media (min-width: 769px) {
   .input {
-    font-size: 15px;
+    font-size: 14px;
   }
   .label {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .textarea {
     min-height: 98px;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .file-label {
@@ -279,7 +279,7 @@ input[type="number"] {
 }
 
 .choices__inner {
-  padding: 7.5px 16px;
+  padding: 7.5px 15px 7.5px 11px;
   display: flex;
   min-height: 56px;
   align-items: center;
@@ -318,7 +318,7 @@ input[type="number"] {
   border-left: transparent;
   transform: translateY(-50%) rotate(45deg);
   position: absolute;
-  right: 28px;
+  right: 16px;
   top: 50%;
   pointer-events: none;
 }
@@ -331,7 +331,13 @@ input[type="number"] {
 }
 
 .choices__list--single {
-  padding: 4px 20px 4px 4px;
+  padding: 4px 12px 4px 4px;
+}
+
+.choices__list--single .choices__item--selectable {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .choices__list--multiple {
@@ -342,9 +348,6 @@ input[type="number"] {
 
 .choices__item--selectable {
   min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .choices__list[aria-multiselectable] {
@@ -405,7 +408,8 @@ input[type="number"] {
   background-color: transparent;
 }
 
-.choices__input.choices__input--cloned[aria-activedescendant] {
+.choices__list--multiple:has(.choices__item)
+  + .choices__input.choices__input--cloned {
   display: none;
 }
 
@@ -419,14 +423,14 @@ input[type="number"] {
 
 @media (min-width: 769px) {
   .choices__inner {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .choices__list--dropdown .choices__item,
   .choices__list .choices__item,
   .choices__list--multiple .choices__item,
   .choices__input {
-    font-size: 15px;
+    font-size: 14px;
   }
 }
 

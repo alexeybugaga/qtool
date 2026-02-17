@@ -662,7 +662,7 @@ export const TOOL_SCHEMAS = {
       {
         type: "select",
         name: "shank-type",
-        label: "Тип отверстия",
+        label: "Тип хвостовика",
         options: [
           { value: "Цилиндрический", label: "Цилиндрический" },
           { value: "Конический", label: "Конический" },
@@ -849,7 +849,6 @@ export const TOOL_SCHEMAS = {
         type: "number",
         name: "mounting-hole-diameter",
         label: "Диаметр посадочного отв-я",
-        unit: "мм",
       },
       {
         type: "textarea",
