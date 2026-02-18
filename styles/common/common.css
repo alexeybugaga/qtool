@@ -124,6 +124,10 @@ input[type="number"] {
   height: fit-content;
 }
 
+.inputbox.additional {
+  z-index: 1;
+}
+
 .input,
 .textarea {
   padding: 15px;
@@ -136,6 +140,9 @@ input[type="number"] {
 }
 
 .label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   position: absolute;
   top: 50%;
   left: 16px;
@@ -276,6 +283,7 @@ input[type="number"] {
 .choices {
   margin: 0;
   height: fit-content;
+  overflow: visible;
 }
 
 .choices__inner {
@@ -289,6 +297,7 @@ input[type="number"] {
   font-size: 13px;
   line-height: 24px;
   font-weight: 500;
+  overflow: visible;
 }
 
 .choices__list--dropdown .choices__item,
@@ -297,6 +306,10 @@ input[type="number"] {
   font-size: 13px;
   line-height: 24px;
   font-weight: 500;
+}
+
+.choices__list[aria-expanded] {
+  z-index: 2;
 }
 
 .choices__list[aria-expanded] .choices__item.is-selected {
@@ -332,6 +345,7 @@ input[type="number"] {
 
 .choices__list--single {
   padding: 4px 12px 4px 4px;
+  width: fit-content;
 }
 
 .choices__list--single .choices__item--selectable {
@@ -461,5 +475,74 @@ input[type="number"] {
   .main-btn {
     min-height: 72px;
     font-size: 18px;
+  }
+}
+
+/* Tooltip */
+
+.field-tooltip {
+  position: relative;
+  display: flex;
+}
+
+.field-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -12px;
+
+  width: 0;
+  height: 0;
+  opacity: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid var(--color-text);
+  transition: opacity 0.3s ease;
+}
+
+.field-tooltip__icon {
+  flex-shrink: 0;
+}
+
+.field-tooltip__content {
+  padding: 8px;
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 200px;
+  background-color: var(--color-text);
+  color: var(--color-white);
+  font-size: 12px;
+  line-height: 12px;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.field-tooltip--top .field-tooltip__content {
+  top: auto;
+  bottom: calc(100% + 12px);
+}
+
+.field-tooltip--top::after {
+  top: -12px;
+  bottom: auto;
+  border-bottom: none;
+  border-top: 12px solid var(--color-text);
+}
+
+.field-tooltip:hover::after,
+.field-tooltip:focus::after,
+.field-tooltip:hover .field-tooltip__content,
+.field-tooltip:focus .field-tooltip__content {
+  opacity: 1;
+}
+
+@media (min-width: 769px) {
+  .field-tooltip__content {
+    padding: 12px;
+    min-width: 292px;
   }
 }

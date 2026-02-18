@@ -82,6 +82,67 @@ $(function () {
         fileDeleteBtn.classList.remove("is-visible");
       });
     }
+    /** Tooltip position */
+
+    function positionTooltip(tooltip) {
+      const content = tooltip.querySelector(".field-tooltip__content");
+      if (!content) return;
+
+      const rect = tooltip.getBoundingClientRect();
+
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      const contentHeight = content.getBoundingClientRect().height;
+      console.log("viewportHeight", viewportHeight);
+      console.log("rect", rect);
+      // Сбросим смещения
+      content.style.left = "";
+      content.style.right = "";
+      content.style.top = "";
+      content.style.bottom = "";
+
+      // По умолчанию показываем снизу
+      tooltip.classList.remove("field-tooltip--top");
+
+      // Проверка по высоте: если не влезает снизу, показываем сверху
+      if (rect.bottom > viewportHeight - contentHeight - rect.height) {
+        tooltip.classList.add("field-tooltip--top");
+      }
+
+      // Проверка по ширине: если вылазит за правый край
+      const tooltipRect = content.getBoundingClientRect();
+      if (tooltipRect.right > viewportWidth - 5) {
+        const overflow = tooltipRect.right - viewportWidth + 5;
+        content.style.left = `-${overflow}px`;
+      }
+
+      // Проверка по левому краю
+      if (tooltipRect.left < 5) {
+        const overflow = 5 - tooltipRect.left;
+        content.style.left = `${overflow}px`;
+      }
+    }
+    document.addEventListener("mouseover", (e) => {
+      const tooltip = e.target.closest(".field-tooltip");
+      if (!tooltip) return;
+      positionTooltip(tooltip);
+      // const tooltip = e.target.closest(".field-tooltip");
+      // if (!tooltip) return;
+
+      // const content = tooltip.querySelector(".field-tooltip__content");
+      // if (!content) return;
+
+      // tooltip.classList.remove("field-tooltip--top");
+
+      // const rect = content.getBoundingClientRect();
+      // const viewportHeight = window.innerHeight;
+      // console.log("viewportHeight", viewportHeight);
+      // console.log("rect", rect);
+      // if (rect.bottom > viewportHeight - 5) {
+      //   tooltip.classList.add("field-tooltip--top");
+      // }
+    });
 
     /** Phone input mask */
 
@@ -119,7 +180,7 @@ $(function () {
         const toolType = firstToolBtn.dataset.productValue;
         const schema = TOOL_SCHEMAS[toolType];
 
-        renderParameters(clone, schema, index);
+        renderParameters(clone, schema, index, toolType);
 
         const title =
           firstToolBtn.dataset.parametersTitle ?? "Введите параметры";
@@ -264,6 +325,16 @@ $(function () {
           closeDropdownOnSelect: !select.multiple,
         });
 
+        if (select.dataset.additional) {
+          const inner = instance.containerInner.element;
+
+          const tooltipWrapper = document.createElement("span");
+          tooltipWrapper.className = "field-tooltip";
+          tooltipWrapper.innerHTML = renderTooltip(select.dataset.additional);
+
+          inner.appendChild(tooltipWrapper);
+        }
+
         if (select.multiple) {
           const dropdown = instance.dropdown.element;
 
@@ -301,7 +372,7 @@ $(function () {
     }
 
     /** Рендер полей формы */
-    function renderParameters(block, schema, positionIndex) {
+    function renderParameters(block, schema, positionIndex, toolType) {
       const form = block.querySelector(".production-request__parameters-form");
       form.innerHTML = "";
 
@@ -309,7 +380,7 @@ $(function () {
         let element;
 
         if (field.type === "select") {
-          element = renderSelect(field, positionIndex);
+          element = renderSelect(field, positionIndex, toolType);
         } else if (field.type === "textarea") {
           element = renderTextarea(field, positionIndex);
         } else {
@@ -325,7 +396,7 @@ $(function () {
     /** Рендер инпута */
     function renderInput(field, positionIndex) {
       const wrapper = document.createElement("div");
-      wrapper.className = "inputbox";
+      wrapper.className = `inputbox ${field.additional ? "additional" : ""}`;
 
       const input = document.createElement("input");
       input.type = field.type || "text";
@@ -335,12 +406,7 @@ $(function () {
       input.placeholder = "";
       input.className = "input production-request__parameters-form-input";
 
-      const label = document.createElement("label");
-      label.className = "label noselect";
-      label.setAttribute("for", input.id);
-      label.textContent = field.unit
-        ? `${field.label}, ${field.unit}`
-        : field.label;
+      const label = createLabel(field, input.id);
 
       wrapper.append(input, label);
 
@@ -348,13 +414,18 @@ $(function () {
     }
 
     /** Рендер селекта */
-    function renderSelect(field, positionIndex) {
+    function renderSelect(field, positionIndex, toolType) {
       const select = document.createElement("select");
 
       select.name = `positions[${positionIndex}][${field.name}]`;
       select.id = `${field.name}_${positionIndex}`;
       select.className = "js-choice";
       select.dataset.placeholder = field.label;
+      select.dataset.toolType = toolType;
+
+      if (field.additional) {
+        select.dataset.additional = field.additional;
+      }
 
       if (field.multiple) {
         select.multiple = true;
@@ -388,6 +459,34 @@ $(function () {
         "textarea production-request__parameters-form-textarea";
 
       return textarea;
+    }
+    /** Рендер label */
+    function createLabel(field, id) {
+      const label = document.createElement("label");
+      label.className = "label noselect";
+      label.setAttribute("for", id);
+
+      const text = field.unit ? `${field.label}, ${field.unit}` : field.label;
+
+      label.innerHTML = `
+        <span>${text}</span>
+        ${field.additional ? renderTooltip(field.additional) : ""}
+      `;
+
+      return label;
+    }
+
+    /** Рендер тултипа */
+    function renderTooltip(text) {
+      return `
+        <button class="field-tooltip" tabindex="-1" type="button">
+          <svg class="field-tooltip__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.00033 13.3334C9.41481 13.3334 10.7714 12.7715 11.7716 11.7713C12.7718 10.7711 13.3337 9.41451 13.3337 8.00002C13.3337 6.58553 12.7718 5.22898 11.7716 4.22878C10.7714 3.22859 9.41481 2.66669 8.00033 2.66669C6.58584 2.66669 5.22928 3.22859 4.22909 4.22878C3.2289 5.22898 2.66699 6.58553 2.66699 8.00002C2.66699 9.41451 3.2289 10.7711 4.22909 11.7713C5.22928 12.7715 6.58584 13.3334 8.00033 13.3334ZM8.00033 5.83335C7.54033 5.83335 7.16699 6.20669 7.16699 6.66669V6.73802C7.16699 6.87063 7.11431 6.99781 7.02055 7.09157C6.92678 7.18534 6.7996 7.23802 6.66699 7.23802C6.53438 7.23802 6.40721 7.18534 6.31344 7.09157C6.21967 6.99781 6.16699 6.87063 6.16699 6.73802V6.66669C6.16699 6.18046 6.36015 5.71414 6.70396 5.37032C7.04778 5.02651 7.5141 4.83335 8.00033 4.83335H8.07766C8.43631 4.83352 8.7863 4.9435 9.08059 5.1485C9.37487 5.35351 9.59932 5.6437 9.72376 5.98007C9.8482 6.31644 9.86666 6.68284 9.77666 7.03002C9.68666 7.37719 9.49251 7.68848 9.22033 7.92202L8.70699 8.36202C8.64259 8.41793 8.59084 8.48692 8.55521 8.5644C8.51957 8.64188 8.50086 8.72607 8.50033 8.81135V9.16669C8.50033 9.2993 8.44765 9.42647 8.35388 9.52024C8.26011 9.61401 8.13293 9.66669 8.00033 9.66669C7.86772 9.66669 7.74054 9.61401 7.64677 9.52024C7.553 9.42647 7.50033 9.2993 7.50033 9.16669V8.81135C7.50033 8.34669 7.70299 7.90535 8.05566 7.60335L8.56966 7.16335C8.68694 7.06283 8.77062 6.92878 8.80942 6.77927C8.84822 6.62975 8.8403 6.47194 8.7867 6.32706C8.73311 6.18219 8.63643 6.05721 8.50966 5.96894C8.38289 5.88067 8.23213 5.83335 8.07766 5.83335H8.00033ZM8.66699 10.6667C8.66699 10.8435 8.59675 11.0131 8.47173 11.1381C8.34671 11.2631 8.17714 11.3334 8.00033 11.3334C7.82351 11.3334 7.65395 11.2631 7.52892 11.1381C7.4039 11.0131 7.33366 10.8435 7.33366 10.6667C7.33366 10.4899 7.4039 10.3203 7.52892 10.1953C7.65395 10.0703 7.82351 10 8.00033 10C8.17714 10 8.34671 10.0703 8.47173 10.1953C8.59675 10.3203 8.66699 10.4899 8.66699 10.6667Z" fill="currentColor"/>
+          </svg>
+
+          <span class="field-tooltip__content">${text}</span>
+        </button>
+      `;
     }
   })();
 });
