@@ -344,12 +344,6 @@ export const TOOL_SCHEMAS = {
         unit: "шт",
       },
       {
-        type: "number",
-        name: "kit",
-        label: "Комплект",
-        unit: "шт",
-      },
-      {
         type: "select",
         name: "view",
         label: "Вид",

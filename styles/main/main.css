@@ -831,7 +831,7 @@
   }
 
   .production-request__container {
-    padding: 72px 108px 74px 108px;
+    padding: 64px 80px;
   }
   .production-request__title {
     line-height: 24px;
@@ -976,5 +976,11 @@
 
   .completed-orders__slider-btns-wrapper {
     top: -67px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .production-request__container {
+    padding: 72px 108px 74px 108px;
   }
 }
