@@ -12,8 +12,6 @@ export const TOOL_SCHEMAS = {
         type: "select",
         name: "coating",
         label: "Покрытие",
-        additional:
-          "Диаметр и размер квадрата для ручных, размер конуса для кх",
         options: [
           { value: "Алмазное", label: "Алмазное" },
           { value: "Без покрытия", label: "Без покрытия" },
