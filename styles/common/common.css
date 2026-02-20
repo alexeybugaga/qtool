@@ -199,6 +199,15 @@ input[type="number"] {
   border: 1px dashed var(--color-gray-99);
 }
 
+.file-label.active {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.file-label.active .file-label-text {
+  color: var(--color-brand);
+}
+
 /* -- Custom checkbox */
 .custom-checkbox-wrapper {
   position: relative;

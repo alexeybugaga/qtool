@@ -60,26 +60,67 @@ $(function () {
     });
 
     /** Input file  */
+    function showFileLabel(
+      fileLabel,
+      fileLabelText,
+      fileDeleteBtn,
+      textContent,
+    ) {
+      if (!fileLabel || !fileLabelText || !fileDeleteBtn) {
+        return;
+      }
 
+      fileLabelText.textContent = textContent;
+      fileLabel.classList.add("active");
+      fileDeleteBtn.classList?.add("is-visible");
+    }
+
+    function hideFileLabel(
+      fileLabel,
+      fileLabelText,
+      fileDeleteBtn,
+      textContent,
+    ) {
+      if (!fileLabel || !fileLabelText || !fileDeleteBtn) {
+        return;
+      }
+
+      fileLabel.classList.remove("active");
+      fileLabelText.textContent = textContent;
+      fileDeleteBtn.classList.remove("is-visible");
+    }
     const fileInput = document.querySelector(".js-file-input");
+    const fileLabel = document.querySelector(".js-file-label");
     const fileLabelText = document.querySelector(".js-file-label-text");
     const fileDeleteBtn = document.querySelector(".js-file-delete-btn");
 
     if (fileInput && fileLabelText && fileDeleteBtn) {
       fileInput.addEventListener("change", () => {
         if (fileInput.files.length > 0) {
-          fileLabelText.textContent = fileInput.files[0].name;
-          fileDeleteBtn.classList?.add("is-visible");
+          showFileLabel(
+            fileLabel,
+            fileLabelText,
+            fileDeleteBtn,
+            fileInput.files[0].name,
+          );
         } else {
-          fileLabelText.textContent = "Прикрепить файл";
-          fileDeleteBtn.classList.add("is-visible");
+          hideFileLabel(
+            fileLabel,
+            fileLabelText,
+            fileDeleteBtn,
+            "Прикрепить файл",
+          );
         }
       });
 
       fileDeleteBtn.addEventListener("click", () => {
         fileInput.value = "";
-        fileLabelText.textContent = "Прикрепить файл";
-        fileDeleteBtn.classList.remove("is-visible");
+        hideFileLabel(
+          fileLabel,
+          fileLabelText,
+          fileDeleteBtn,
+          "Прикрепить файл",
+        );
       });
     }
     /** Tooltip position */
@@ -349,17 +390,17 @@ $(function () {
 
     function initChoices(block) {
       block.querySelectorAll(".js-choice").forEach((select) => {
+        const isMultiple = select.multiple;
+
         const instance = new Choices(select, {
           searchEnabled: false,
           searchChoices: false,
           itemSelectText: "",
           shouldSort: false,
           renderSelectedChoices: "always",
-          placeholder: select.multiple ? true : false,
-          placeholderValue: select.multiple
-            ? select.dataset.placeholder
-            : undefined,
-          closeDropdownOnSelect: !select.multiple,
+          placeholder: isMultiple ? true : false,
+          placeholderValue: isMultiple ? select.dataset.placeholder : undefined,
+          closeDropdownOnSelect: !isMultiple,
         });
 
         if (select.dataset.additional) {
@@ -372,7 +413,7 @@ $(function () {
           inner.appendChild(tooltipWrapper);
         }
 
-        if (select.multiple) {
+        if (isMultiple) {
           const dropdown = instance.dropdown.element;
 
           dropdown.addEventListener(
