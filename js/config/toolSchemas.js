@@ -23,12 +23,54 @@ export const TOOL_SCHEMAS = {
         name: "processing-material",
         label: "Материал обработки",
         options: [
-          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
-          { value: "K (чугун)", label: "K (чугун)" },
-          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
-          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
-          { value: "P (сталь)", label: "P (сталь)" },
-          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
+          {
+            value: "H (твердые материалы)",
+            label: "H (твердые материалы)",
+            customProperties: {
+              code: "H",
+              color: "#e53935",
+            },
+          },
+          {
+            value: "K (чугун)",
+            label: "K (чугун)",
+            customProperties: {
+              code: "K",
+              color: "#1e88e5",
+            },
+          },
+          {
+            value: "M (нержавеющая сталь)",
+            label: "M (нержавеющая сталь)",
+            customProperties: {
+              code: "M",
+              color: "#43a047",
+            },
+          },
+          {
+            value: "N (цветные металлы)",
+            label: "N (цветные металлы)",
+            customProperties: {
+              code: "N",
+              color: "#43a047",
+            },
+          },
+          {
+            value: "P (сталь)",
+            label: "P (сталь)",
+            customProperties: {
+              code: "P",
+              color: "#43a047",
+            },
+          },
+          {
+            value: "S (жаропрочные)",
+            label: "S (жаропрочные)",
+            customProperties: {
+              code: "S",
+              color: "#43a047",
+            },
+          },
         ],
       },
       {

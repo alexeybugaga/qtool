@@ -401,6 +401,38 @@ $(function () {
           placeholder: isMultiple ? true : false,
           placeholderValue: isMultiple ? select.dataset.placeholder : undefined,
           closeDropdownOnSelect: !isMultiple,
+          callbackOnCreateTemplates: !isMultiple
+            ? function () {
+                return {
+                  choice: (...args) => {
+                    const element = Choices.defaults.templates.choice.call(
+                      this,
+                      ...args,
+                    );
+                    const data = args[1];
+
+                    const originalOption = data.element;
+                    console.log("args", args);
+
+                    const code = originalOption?.dataset?.code;
+                    const color = originalOption?.dataset?.color;
+
+                    if (code) {
+                      const badge = document.createElement("span");
+                      badge.className = "material-badge";
+                      badge.textContent = code;
+
+                      if (color) {
+                        badge.style.backgroundColor = color;
+                      }
+
+                      element.prepend(badge);
+                    }
+                    return element;
+                  },
+                };
+              }
+            : undefined,
         });
 
         if (select.dataset.additional) {
@@ -520,6 +552,15 @@ $(function () {
         const option = document.createElement("option");
         option.value = opt.value;
         option.textContent = opt.label;
+
+        if (opt.customProperties?.code) {
+          option.dataset.code = opt.customProperties.code;
+        }
+
+        if (opt.customProperties?.color) {
+          option.dataset.color = opt.customProperties.color;
+        }
+
         select.appendChild(option);
       });
 
