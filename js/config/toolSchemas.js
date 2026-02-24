@@ -4,19 +4,11 @@ const processingMaterialObj = {
   label: "Материал обработки",
   options: [
     {
-      value: "H (твердые материалы)",
-      label: "Твердые материалы",
+      value: "P (сталь)",
+      label: "Сталь",
       customProperties: {
-        code: "H",
-        color: "#BCCBD1",
-      },
-    },
-    {
-      value: "K (чугун)",
-      label: "Чугун",
-      customProperties: {
-        code: "K",
-        color: "#ED1D23",
+        code: "P",
+        color: "#00AEEC",
       },
     },
     {
@@ -28,6 +20,14 @@ const processingMaterialObj = {
       },
     },
     {
+      value: "K (чугун)",
+      label: "Чугун",
+      customProperties: {
+        code: "K",
+        color: "#ED1D23",
+      },
+    },
+    {
       value: "N (цветные металлы)",
       label: "Цветные металлы",
       customProperties: {
@@ -36,19 +36,19 @@ const processingMaterialObj = {
       },
     },
     {
-      value: "P (сталь)",
-      label: "Сталь",
-      customProperties: {
-        code: "P",
-        color: "#00AEEC",
-      },
-    },
-    {
       value: "S (жаропрочные)",
       label: "Жаропрочные",
       customProperties: {
         code: "S",
         color: "#FBBE85",
+      },
+    },
+    {
+      value: "H (твердые материалы)",
+      label: "Твердые материалы",
+      customProperties: {
+        code: "H",
+        color: "#BCCBD1",
       },
     },
   ],
