@@ -242,7 +242,6 @@ $(function () {
 
       updateAttributes(clone, index);
       resetValues(clone);
-
       container.appendChild(clone);
 
       initChoices(clone);
@@ -259,6 +258,7 @@ $(function () {
         const schema = TOOL_SCHEMAS[toolType];
 
         renderParameters(clone, schema, index, toolType);
+        initTextInputs(clone);
 
         const title =
           firstToolBtn.dataset.parametersTitle ?? "Введите параметры";
@@ -291,7 +291,7 @@ $(function () {
         const toolType = toolBtn.dataset.productValue;
         const schema = TOOL_SCHEMAS[toolType];
         renderParameters(block, schema, positionIndex);
-
+        initTextInputs(block);
         block
           .querySelectorAll(".js-select-tool-btn")
           .forEach((b) => b.classList.remove("active"));
@@ -412,7 +412,6 @@ $(function () {
                     const data = args[1];
 
                     const originalOption = data.element;
-                    console.log("args", args);
 
                     const code = originalOption?.dataset?.code;
                     const color = originalOption?.dataset?.color;
@@ -427,6 +426,7 @@ $(function () {
                       }
 
                       element.prepend(badge);
+                      element.classList.add("choices__item--custom");
                     }
                     return element;
                   },
@@ -465,6 +465,32 @@ $(function () {
             true,
           );
         }
+
+        select.addEventListener("change", () => {
+          const wrapper = select.closest(".choices");
+          if (!wrapper) {
+            return;
+          }
+          if (select.value !== "") {
+            wrapper.classList.add("is-filled");
+          } else {
+            wrapper.classList.remove("is-filled");
+          }
+        });
+
+        if (select.value !== "") {
+          select.closest(".choices")?.classList.add("is-filled");
+        }
+
+        instance.passedElement.element.addEventListener("removeItem", () => {
+          const wrapper = select.closest(".choices");
+          if (!wrapper) {
+            return;
+          }
+          if (select.selectedOptions.length === 0) {
+            wrapper.classList.remove("is-filled");
+          }
+        });
       });
     }
 
@@ -606,6 +632,37 @@ $(function () {
           <span class="field-tooltip__content">${text}</span>
         </span>
       `;
+    }
+
+    function initTextInputs(block) {
+      block.querySelectorAll("input").forEach((el) => {
+        const wrapper = el.closest(".inputbox");
+        if (!wrapper) return;
+
+        const updateClass = () => {
+          if (el.value.trim() !== "") {
+            wrapper.classList.add("is-filled");
+          } else {
+            wrapper.classList.remove("is-filled");
+          }
+        };
+
+        updateClass();
+        el.addEventListener("change", updateClass);
+      });
+
+      block.querySelectorAll("textarea").forEach((el) => {
+        const updateClass = () => {
+          if (el.value.trim() !== "") {
+            el.classList.add("is-filled");
+          } else {
+            el.classList.remove("is-filled");
+          }
+        };
+
+        updateClass();
+        el.addEventListener("change", updateClass);
+      });
     }
   })();
 });

@@ -1,3 +1,59 @@
+const processingMaterialObj = {
+  type: "select",
+  name: "processing-material",
+  label: "Материал обработки",
+  options: [
+    {
+      value: "H (твердые материалы)",
+      label: "H (твердые материалы)",
+      customProperties: {
+        code: "H",
+        color: "#BCCBD1",
+      },
+    },
+    {
+      value: "K (чугун)",
+      label: "K (чугун)",
+      customProperties: {
+        code: "K",
+        color: "#ED1D23",
+      },
+    },
+    {
+      value: "M (нержавеющая сталь)",
+      label: "M (нержавеющая сталь)",
+      customProperties: {
+        code: "M",
+        color: "#FEF100",
+      },
+    },
+    {
+      value: "N (цветные металлы)",
+      label: "N (цветные металлы)",
+      customProperties: {
+        code: "N",
+        color: "#8CC4B1",
+      },
+    },
+    {
+      value: "P (сталь)",
+      label: "P (сталь)",
+      customProperties: {
+        code: "P",
+        color: "#00AEEC",
+      },
+    },
+    {
+      value: "S (жаропрочные)",
+      label: "S (жаропрочные)",
+      customProperties: {
+        code: "S",
+        color: "#FBBE85",
+      },
+    },
+  ],
+};
+
 export const TOOL_SCHEMAS = {
   milling: {
     label: "Фреза",
@@ -19,59 +75,7 @@ export const TOOL_SCHEMAS = {
         ],
       },
       {
-        type: "select",
-        name: "processing-material",
-        label: "Материал обработки",
-        options: [
-          {
-            value: "H (твердые материалы)",
-            label: "H (твердые материалы)",
-            customProperties: {
-              code: "H",
-              color: "#e53935",
-            },
-          },
-          {
-            value: "K (чугун)",
-            label: "K (чугун)",
-            customProperties: {
-              code: "K",
-              color: "#1e88e5",
-            },
-          },
-          {
-            value: "M (нержавеющая сталь)",
-            label: "M (нержавеющая сталь)",
-            customProperties: {
-              code: "M",
-              color: "#43a047",
-            },
-          },
-          {
-            value: "N (цветные металлы)",
-            label: "N (цветные металлы)",
-            customProperties: {
-              code: "N",
-              color: "#43a047",
-            },
-          },
-          {
-            value: "P (сталь)",
-            label: "P (сталь)",
-            customProperties: {
-              code: "P",
-              color: "#43a047",
-            },
-          },
-          {
-            value: "S (жаропрочные)",
-            label: "S (жаропрочные)",
-            customProperties: {
-              code: "S",
-              color: "#43a047",
-            },
-          },
-        ],
+        ...processingMaterialObj,
       },
       {
         type: "select",
@@ -181,17 +185,7 @@ export const TOOL_SCHEMAS = {
         unit: "мм",
       },
       {
-        type: "select",
-        name: "processing-material",
-        label: "Материал обработки",
-        options: [
-          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
-          { value: "K (чугун)", label: "K (чугун)" },
-          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
-          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
-          { value: "P (сталь)", label: "P (сталь)" },
-          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
-        ],
+        ...processingMaterialObj,
       },
       {
         name: "tool-material",
@@ -295,17 +289,7 @@ export const TOOL_SCHEMAS = {
         ],
       },
       {
-        type: "select",
-        name: "processing-material",
-        label: "Материал обработки",
-        options: [
-          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
-          { value: "K (чугун)", label: "K (чугун)" },
-          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
-          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
-          { value: "P (сталь)", label: "P (сталь)" },
-          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
-        ],
+        ...processingMaterialObj,
       },
 
       {
@@ -418,17 +402,7 @@ export const TOOL_SCHEMAS = {
         ],
       },
       {
-        type: "select",
-        name: "processing-material",
-        label: "Материал обработки",
-        options: [
-          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
-          { value: "K (чугун)", label: "K (чугун)" },
-          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
-          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
-          { value: "P (сталь)", label: "P (сталь)" },
-          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
-        ],
+        ...processingMaterialObj,
       },
       {
         type: "select",
@@ -592,17 +566,7 @@ export const TOOL_SCHEMAS = {
         ],
       },
       {
-        type: "select",
-        name: "processing-material",
-        label: "Материал обработки",
-        options: [
-          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
-          { value: "K (чугун)", label: "K (чугун)" },
-          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
-          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
-          { value: "P (сталь)", label: "P (сталь)" },
-          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
-        ],
+        ...processingMaterialObj,
       },
       {
         type: "select",
@@ -711,17 +675,7 @@ export const TOOL_SCHEMAS = {
           "Диаметр и размер квадрата для ручных, размер конуса для кх",
       },
       {
-        type: "select",
-        name: "processing-material",
-        label: "Материал обработки",
-        options: [
-          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
-          { value: "K (чугун)", label: "K (чугун)" },
-          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
-          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
-          { value: "P (сталь)", label: "P (сталь)" },
-          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
-        ],
+        ...processingMaterialObj,
       },
       {
         type: "select",
@@ -820,17 +774,7 @@ export const TOOL_SCHEMAS = {
         ],
       },
       {
-        type: "select",
-        name: "processing-material",
-        label: "Материал обработки",
-        options: [
-          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
-          { value: "K (чугун)", label: "K (чугун)" },
-          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
-          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
-          { value: "P (сталь)", label: "P (сталь)" },
-          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
-        ],
+        ...processingMaterialObj,
       },
       {
         type: "select",
@@ -950,17 +894,7 @@ export const TOOL_SCHEMAS = {
         label: "Тип резьбы",
       },
       {
-        type: "select",
-        name: "processing-material",
-        label: "Материал обработки",
-        options: [
-          { value: "H (твердые материалы)", label: "H (твердые материалы)" },
-          { value: "K (чугун)", label: "K (чугун)" },
-          { value: "M (нержавеющая сталь)", label: "M (нержавеющая сталь)" },
-          { value: "N (цветные металлы)", label: "N (цветные металлы)" },
-          { value: "P (сталь)", label: "P (сталь)" },
-          { value: "S (жаропрочные)", label: "S (жаропрочные)" },
-        ],
+        ...processingMaterialObj,
       },
       {
         type: "select",
