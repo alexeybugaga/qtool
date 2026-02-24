@@ -12,9 +12,10 @@
   --color-brand-opacity-15: #0475b126;
   --color-brand-active: #00669d;
 
-  --color-gray-opacity-15: #303b4526;
   --color-gray-opacity-75: #303b45bf;
   --color-gray-opacity-50: #303b4580;
+  --color-gray-opacity-25: #303b4540;
+  --color-gray-opacity-15: #303b4526;
 
   --color-error: #ed1d23;
 }
