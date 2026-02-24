@@ -60,26 +60,67 @@ $(function () {
     });
 
     /** Input file  */
+    function showFileLabel(
+      fileLabel,
+      fileLabelText,
+      fileDeleteBtn,
+      textContent,
+    ) {
+      if (!fileLabel || !fileLabelText || !fileDeleteBtn) {
+        return;
+      }
 
+      fileLabelText.textContent = textContent;
+      fileLabel.classList.add("active");
+      fileDeleteBtn.classList?.add("is-visible");
+    }
+
+    function hideFileLabel(
+      fileLabel,
+      fileLabelText,
+      fileDeleteBtn,
+      textContent,
+    ) {
+      if (!fileLabel || !fileLabelText || !fileDeleteBtn) {
+        return;
+      }
+
+      fileLabel.classList.remove("active");
+      fileLabelText.textContent = textContent;
+      fileDeleteBtn.classList.remove("is-visible");
+    }
     const fileInput = document.querySelector(".js-file-input");
+    const fileLabel = document.querySelector(".js-file-label");
     const fileLabelText = document.querySelector(".js-file-label-text");
     const fileDeleteBtn = document.querySelector(".js-file-delete-btn");
 
     if (fileInput && fileLabelText && fileDeleteBtn) {
       fileInput.addEventListener("change", () => {
         if (fileInput.files.length > 0) {
-          fileLabelText.textContent = fileInput.files[0].name;
-          fileDeleteBtn.classList?.add("is-visible");
+          showFileLabel(
+            fileLabel,
+            fileLabelText,
+            fileDeleteBtn,
+            fileInput.files[0].name,
+          );
         } else {
-          fileLabelText.textContent = "Прикрепить файл";
-          fileDeleteBtn.classList.add("is-visible");
+          hideFileLabel(
+            fileLabel,
+            fileLabelText,
+            fileDeleteBtn,
+            "Прикрепить файл",
+          );
         }
       });
 
       fileDeleteBtn.addEventListener("click", () => {
         fileInput.value = "";
-        fileLabelText.textContent = "Прикрепить файл";
-        fileDeleteBtn.classList.remove("is-visible");
+        hideFileLabel(
+          fileLabel,
+          fileLabelText,
+          fileDeleteBtn,
+          "Прикрепить файл",
+        );
       });
     }
     /** Tooltip position */
@@ -201,7 +242,6 @@ $(function () {
 
       updateAttributes(clone, index);
       resetValues(clone);
-
       container.appendChild(clone);
 
       initChoices(clone);
@@ -218,6 +258,7 @@ $(function () {
         const schema = TOOL_SCHEMAS[toolType];
 
         renderParameters(clone, schema, index, toolType);
+        initTextInputs(clone);
 
         const title =
           firstToolBtn.dataset.parametersTitle ?? "Введите параметры";
@@ -250,7 +291,7 @@ $(function () {
         const toolType = toolBtn.dataset.productValue;
         const schema = TOOL_SCHEMAS[toolType];
         renderParameters(block, schema, positionIndex);
-
+        initTextInputs(block);
         block
           .querySelectorAll(".js-select-tool-btn")
           .forEach((b) => b.classList.remove("active"));
@@ -349,17 +390,49 @@ $(function () {
 
     function initChoices(block) {
       block.querySelectorAll(".js-choice").forEach((select) => {
+        const isMultiple = select.multiple;
+
         const instance = new Choices(select, {
           searchEnabled: false,
           searchChoices: false,
           itemSelectText: "",
           shouldSort: false,
           renderSelectedChoices: "always",
-          placeholder: select.multiple ? true : false,
-          placeholderValue: select.multiple
-            ? select.dataset.placeholder
+          placeholder: isMultiple ? true : false,
+          placeholderValue: isMultiple ? select.dataset.placeholder : undefined,
+          closeDropdownOnSelect: !isMultiple,
+          callbackOnCreateTemplates: !isMultiple
+            ? function () {
+                return {
+                  choice: (...args) => {
+                    const element = Choices.defaults.templates.choice.call(
+                      this,
+                      ...args,
+                    );
+                    const data = args[1];
+
+                    const originalOption = data.element;
+
+                    const code = originalOption?.dataset?.code;
+                    const color = originalOption?.dataset?.color;
+
+                    if (code) {
+                      const badge = document.createElement("span");
+                      badge.className = "material-badge";
+                      badge.textContent = code;
+
+                      if (color) {
+                        badge.style.backgroundColor = color;
+                      }
+
+                      element.prepend(badge);
+                      element.classList.add("choices__item--custom");
+                    }
+                    return element;
+                  },
+                };
+              }
             : undefined,
-          closeDropdownOnSelect: !select.multiple,
         });
 
         if (select.dataset.additional) {
@@ -372,7 +445,7 @@ $(function () {
           inner.appendChild(tooltipWrapper);
         }
 
-        if (select.multiple) {
+        if (isMultiple) {
           const dropdown = instance.dropdown.element;
 
           dropdown.addEventListener(
@@ -392,6 +465,32 @@ $(function () {
             true,
           );
         }
+
+        select.addEventListener("change", () => {
+          const wrapper = select.closest(".choices");
+          if (!wrapper) {
+            return;
+          }
+          if (select.value !== "") {
+            wrapper.classList.add("is-filled");
+          } else {
+            wrapper.classList.remove("is-filled");
+          }
+        });
+
+        if (select.value !== "") {
+          select.closest(".choices")?.classList.add("is-filled");
+        }
+
+        instance.passedElement.element.addEventListener("removeItem", () => {
+          const wrapper = select.closest(".choices");
+          if (!wrapper) {
+            return;
+          }
+          if (select.selectedOptions.length === 0) {
+            wrapper.classList.remove("is-filled");
+          }
+        });
       });
     }
 
@@ -479,6 +578,15 @@ $(function () {
         const option = document.createElement("option");
         option.value = opt.value;
         option.textContent = opt.label;
+
+        if (opt.customProperties?.code) {
+          option.dataset.code = opt.customProperties.code;
+        }
+
+        if (opt.customProperties?.color) {
+          option.dataset.color = opt.customProperties.color;
+        }
+
         select.appendChild(option);
       });
 
@@ -524,6 +632,37 @@ $(function () {
           <span class="field-tooltip__content">${text}</span>
         </span>
       `;
+    }
+
+    function initTextInputs(block) {
+      block.querySelectorAll("input").forEach((el) => {
+        const wrapper = el.closest(".inputbox");
+        if (!wrapper) return;
+
+        const updateClass = () => {
+          if (el.value.trim() !== "") {
+            wrapper.classList.add("is-filled");
+          } else {
+            wrapper.classList.remove("is-filled");
+          }
+        };
+
+        updateClass();
+        el.addEventListener("change", updateClass);
+      });
+
+      block.querySelectorAll("textarea").forEach((el) => {
+        const updateClass = () => {
+          if (el.value.trim() !== "") {
+            el.classList.add("is-filled");
+          } else {
+            el.classList.remove("is-filled");
+          }
+        };
+
+        updateClass();
+        el.addEventListener("change", updateClass);
+      });
     }
   })();
 });

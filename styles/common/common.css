@@ -189,6 +189,18 @@ input[type="number"] {
   line-height: 16px;
 }
 
+/* Заполненный input */
+
+.inputbox.is-filled .input,
+.textarea.is-filled {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.inputbox.is-filled .label {
+  color: var(--color-brand);
+}
+
 /* -- File input -- */
 .file {
   position: relative;
@@ -197,6 +209,15 @@ input[type="number"] {
 .file-label {
   padding: 15px 32px;
   border: 1px dashed var(--color-gray-99);
+}
+
+.file-label.active {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+
+.file-label.active .file-label-text {
+  color: var(--color-brand);
 }
 
 /* -- Custom checkbox */
@@ -302,20 +323,84 @@ input[type="number"] {
 }
 
 .choices__list--dropdown .choices__item,
-.choices__list .choices__item,
+.choices__list[aria-expanded] .choices__item,
 .choices__input {
   font-size: 13px;
   line-height: 24px;
   font-weight: 500;
 }
 
-.choices__list[aria-expanded] {
-  z-index: 2;
+.choices__list[aria-expanded]
+  .choices__list:not([aria-multiselectable])
+  .choices__item:not(:first-child):not(.choices__item--custom) {
+  position: relative;
+  padding: 5px 10px 5px 28px;
 }
 
-.choices__list[aria-expanded] .choices__item.is-selected {
-  background-color: var(--color-text);
+.choices__list[aria-expanded] .choices__list:not([aria-multiselectable]) {
+  padding: 10px;
+  word-break: initial;
+}
+
+.choices__list[aria-expanded] .choices__item.choices__item--custom {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-gray-opacity-75);
+}
+
+.choices__item--custom .material-badge {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 700;
   color: var(--color-white);
+}
+
+.choices__list[aria-expanded]
+  .choices__list:not([aria-multiselectable])
+  .choices__item:not(:first-child):not(.choices__item--custom)::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 4px;
+  width: 15px;
+  height: 15px;
+  border: 1px solid var(--color-gray-opacity-25);
+}
+
+.choices__list[aria-expanded]
+  .choices__list:not([aria-multiselectable])
+  .choices__item:not(:first-child):not(.choices__item--custom)::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 6px;
+  width: 13px;
+  height: 13px;
+  background-color: transparent;
+}
+
+.choices__list[aria-expanded]
+  .choices__list:not([aria-multiselectable])
+  .choices__item:not(:first-child).is-selected::before {
+  border-color: var(--color-brand);
+}
+
+.choices__list[aria-expanded]
+  .choices__list:not([aria-multiselectable])
+  .choices__item:not(:first-child).is-selected::after {
+  background-color: var(--color-brand);
+  opacity: 1;
+}
+
+.choices__list[aria-expanded] {
+  z-index: 2;
 }
 
 .choices__list--single .choices__item {
@@ -397,7 +482,7 @@ input[type="number"] {
   margin: 0;
   flex-shrink: 0;
   background-color: transparent;
-  color: var(--color-gray-opacity-75);
+  color: var(--color-brand);
   border: none;
 }
 
@@ -434,9 +519,26 @@ input[type="number"] {
   padding: 15px 18px;
 }
 
+.choices[data-type="select-multiple"] .choices__input {
+  margin-bottom: 0;
+}
+
 .choices__list--multiple .choices__item[data-deletable] {
   padding-right: 0;
 }
+
+/* Если в select выбрано значение (не placeholder) */
+
+.choices.is-filled[data-type*="select-one"]::after,
+.choices.is-filled .choices__inner {
+  border-color: var(--color-brand);
+}
+
+.choices.is-filled .choices__list--single .choices__item {
+  color: var(--color-brand);
+}
+
+/* custom option */
 
 @media (min-width: 769px) {
   .choices__inner {
@@ -444,10 +546,16 @@ input[type="number"] {
   }
 
   .choices__list--dropdown .choices__item,
-  .choices__list .choices__item,
+  .choices__list[aria-expanded] .choices__item,
   .choices__list--multiple .choices__item,
   .choices__input {
     font-size: 14px;
+  }
+
+  .choices__item--custom .material-badge {
+    font-size: 16px;
+    height: 32px;
+    width: 32px;
   }
 }
 
