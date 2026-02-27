@@ -139,7 +139,7 @@ input[type="number"] {
   transition: border-color 0.3s ease;
 }
 
-.label {
+.labelp {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -154,7 +154,7 @@ input[type="number"] {
   transition: all 0.3s ease;
 }
 
-.textarea + .label {
+.textarea + .labelp {
   top: 28px;
 }
 
@@ -167,10 +167,10 @@ input[type="number"] {
   border-color: var(--color-gray-opacity-75);
 }
 
-.input:focus + .label,
-.input:not(:placeholder-shown) + .label,
-.textarea:focus + .label,
-.textarea:not(:placeholder-shown) + .label {
+.input:focus + .labelp,
+.input:not(:placeholder-shown) + .labelp,
+.textarea:focus + .labelp,
+.textarea:not(:placeholder-shown) + .labelp {
   transform: none;
   top: 0;
   font-size: 9px;
@@ -197,7 +197,7 @@ input[type="number"] {
   color: var(--color-brand);
 }
 
-.inputbox.is-filled .label {
+.inputbox.is-filled .labelp {
   color: var(--color-brand);
 }
 
@@ -277,7 +277,7 @@ input[type="number"] {
   .input {
     font-size: 14px;
   }
-  .label {
+  .labelp {
     font-size: 14px;
   }
 

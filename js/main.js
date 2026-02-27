@@ -608,7 +608,7 @@ $(function () {
     /** Рендер label */
     function createLabel(field, id) {
       const label = document.createElement("label");
-      label.className = "label noselect";
+      label.className = "labelp noselect";
       label.setAttribute("for", id);
 
       const text = field.unit ? `${field.label}, ${field.unit}` : field.label;
