@@ -435,6 +435,12 @@ $(function () {
             : undefined,
         });
 
+        const outer = instance.containerOuter.element;
+
+        if (isCustomMultiple) {
+          outer.classList.add("choices--custom-multiple");
+        }
+
         if (select.dataset.additional) {
           const inner = instance.containerInner.element;
 

@@ -348,6 +348,7 @@ input[type="number"] {
   align-items: center;
   gap: 12px;
   color: var(--color-gray-opacity-75);
+  width: 100%;
 }
 
 .choices__item--custom .material-badge {
@@ -458,14 +459,16 @@ input[type="number"] {
   gap: 2px;
 }
 
-.choices__list[aria-multiselectable] .choices__item {
+.choices--custom-multiple .choices__list[aria-multiselectable] .choices__item {
   padding: 4px 11px;
   font-size: 12px;
   line-height: 15px;
   border: 1px solid rgba(48, 59, 69, 0.25);
 }
 
-.choices__list[aria-multiselectable] .choices__item.is-selected {
+.choices--custom-multiple
+  .choices__list[aria-multiselectable]
+  .choices__item.is-selected {
   border-color: var(--color-text);
   background-color: var(--color-text);
   color: var(--color-white);
@@ -516,6 +519,10 @@ input[type="number"] {
 }
 
 .choices[data-type="select-multiple"] .choices__list--dropdown {
+  padding: 10px;
+}
+
+.choices.choices--custom-multiple .choices__list--dropdown {
   padding: 15px 18px;
 }
 
