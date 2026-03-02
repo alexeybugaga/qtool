@@ -2,6 +2,7 @@ const processingMaterialObj = {
   type: "select",
   name: "processing-material",
   label: "Материал обработки",
+  multiple: true,
   options: [
     {
       value: "P (сталь)",
@@ -409,6 +410,9 @@ export const TOOL_SCHEMAS = {
         name: "tap-type",
         label: "Тип метчика",
         multiple: true,
+        settings: {
+          customMultiple: true,
+        },
         options: [
           { value: "Бесстружечный", label: "Бесстружечный" },
           { value: "Дюймовый", label: "Дюймовый" },
@@ -851,6 +855,9 @@ export const TOOL_SCHEMAS = {
         name: "view",
         label: "Вид",
         multiple: true,
+        settings: {
+          customMultiple: true,
+        },
         options: [
           {
             value: "Калибр для малых отверстий",
