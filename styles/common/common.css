@@ -16,6 +16,12 @@ body {
   scroll-behavior: smooth;
 }
 
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -370,8 +376,8 @@ input[type="number"] {
   position: absolute;
   top: 8px;
   left: 4px;
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   border: 1px solid var(--color-gray-opacity-25);
 }
 
@@ -472,6 +478,12 @@ input[type="number"] {
   border-color: var(--color-text);
   background-color: var(--color-text);
   color: var(--color-white);
+}
+
+.choices__list[aria-multiselectable] .choices__item--custom.is-selected,
+.choices__list[aria-multiselectable]
+  .choices__item--custom.is-selected.is-highlighted {
+  background-color: var(--color-gray-opacity-25);
 }
 
 .choices {
