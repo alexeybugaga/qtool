@@ -256,7 +256,6 @@ $(function () {
 
         const toolType = firstToolBtn.dataset.productValue;
         const schema = TOOL_SCHEMAS[toolType];
-
         renderParameters(clone, schema, index, toolType);
         initTextInputs(clone);
 
@@ -290,7 +289,7 @@ $(function () {
         const positionIndex = block.dataset.positionIndex;
         const toolType = toolBtn.dataset.productValue;
         const schema = TOOL_SCHEMAS[toolType];
-        renderParameters(block, schema, positionIndex);
+        renderParameters(block, schema, positionIndex, toolType);
         initTextInputs(block);
         block
           .querySelectorAll(".js-select-tool-btn")
@@ -391,6 +390,7 @@ $(function () {
     function initChoices(block) {
       block.querySelectorAll(".js-choice").forEach((select) => {
         const isMultiple = select.multiple;
+        const isCustomMultiple = select.dataset.customMultiple;
 
         const instance = new Choices(select, {
           searchEnabled: false,
@@ -401,7 +401,7 @@ $(function () {
           placeholder: isMultiple ? true : false,
           placeholderValue: isMultiple ? select.dataset.placeholder : undefined,
           closeDropdownOnSelect: !isMultiple,
-          callbackOnCreateTemplates: !isMultiple
+          callbackOnCreateTemplates: !isCustomMultiple
             ? function () {
                 return {
                   choice: (...args) => {
@@ -434,6 +434,12 @@ $(function () {
               }
             : undefined,
         });
+
+        const outer = instance.containerOuter.element;
+
+        if (isCustomMultiple) {
+          outer.classList.add("choices--custom-multiple");
+        }
 
         if (select.dataset.additional) {
           const inner = instance.containerInner.element;
@@ -552,15 +558,20 @@ $(function () {
     /** Рендер селекта */
     function renderSelect(field, positionIndex, toolType) {
       const select = document.createElement("select");
-
       select.name = `positions[${positionIndex}][${field.name}]`;
       select.id = `${field.name}_${positionIndex}`;
       select.className = "js-choice";
       select.dataset.placeholder = field.label;
-      select.dataset.toolType = toolType;
+      if (toolType) {
+        select.dataset.toolType = toolType;
+      }
 
       if (field.additional) {
         select.dataset.additional = field.additional;
+      }
+
+      if (field.settings?.customMultiple) {
+        select.dataset.customMultiple = field.settings.customMultiple;
       }
 
       if (field.multiple) {
