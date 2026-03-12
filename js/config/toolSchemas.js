@@ -538,16 +538,8 @@ export const TOOL_SCHEMAS = {
         unit: "шт",
       },
       {
-        type: "select",
         name: "thread-type",
         label: "Тип резьбы",
-        options: [
-          { value: "М (Метрическая)", label: "М (Метрическая)" },
-          {
-            value: "G (Трубная цилиндрическая)",
-            label: "G (Трубная цилиндрическая)",
-          },
-        ],
       },
       {
         type: "select",
